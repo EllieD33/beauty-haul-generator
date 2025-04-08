@@ -41,6 +41,7 @@ class Product:
 
         return skin_compatibility_score
 
+    # method takes list of products, skin_type, and limit number of products to be recommended
     @staticmethod
     def recommend_products_for_skin_type(products, skin_type, limit):
         product_scores = {}
@@ -53,11 +54,12 @@ class Product:
 
         return product_recommendations[:limit]
 
-# refine below
+# refine below (testing to see everything works)
 product1 = Product("12", "BrandA", "PRoductA", "20.00", "Sample product", "Foundation", ["hypoallergenic"], "powder", "brown")
 product2 = Product("124", "BrandB", "PRoductB", "10.00", "Sample product", "Lipstick", ["oil free", "vegan", "alcohol free"], "liquid", "pink")
 prods = [product1, product2]
 
+# similar implementation to be used in frontend
 recs = Product.recommend_products_for_skin_type(prods, "dry", 2)
 print(recs)
 print("------------------------")
