@@ -29,12 +29,11 @@ class Product:
             "normal": ["natural", "vegan", "hypoallergenic"]
         }
 
-        if skin_type.lower() not in skin_type_tags:
-            return False
+        skin_compatibility_score = 0
 
-        for skin_type_tag in skin_type_tags[skin_type.lower()]:
-            if skin_type_tag in tags:
-                return True
+        for tag in tags:
+            if tag in skin_type_tags[skin_type.lower()]:
+                skin_compatibility_score += 1
 
-        return False
+        return skin_compatibility_score
 
