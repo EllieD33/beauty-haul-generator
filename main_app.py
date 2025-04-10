@@ -17,7 +17,7 @@ def get_user_consent(input_collector):
 
 
 def main():
-    print("\n✨💄Welcome to the beauty haul generator 💄✨\n")
+    print("\n✨💄 Welcome to the beauty haul generator 💄✨\n")
     print("📌 Here's how this works...\n")
     print("1️⃣ I'll ask some questions about you.")
     print("2️⃣ I'll work my magic to generate you a new haul.")
