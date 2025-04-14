@@ -60,8 +60,8 @@ product2 = Product("124", "BrandB", "PRoductB", "10.00", "Sample product", "Lips
 prods = [product1, product2]
 
 # similar implementation to be used in frontend
-recs = Product.recommend_products_for_skin_type(prods, "dry", 2)
-print(recs)
+all_recs = Product.recommend_products_for_skin_type(prods, "dry", len(prods))
+print(all_recs)
 print("------------------------")
-for product, score in recs:
+for product, score in all_recs:
     print(f"Product: {product.get_name()}, score: {score}")
