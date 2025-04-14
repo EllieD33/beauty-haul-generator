@@ -20,9 +20,9 @@ class Product:
               f"Price: {self.__price}\n"
               f"Description: {self.__description}")
 
-    # this function gets called in static method for each product in list.
+    # method gets called in static method for each product in list.
     def get_skin_compatibility(self, skin_type):
-        tags = [tag.lower() for tag in self.__tag_list]
+        tags = [tag.lower().strip() for tag in self.__tag_list]
 
         skin_type_tags = {
             "oily": ["oil free", "hypoallergenic", "natural", "silicone free"],
@@ -36,7 +36,7 @@ class Product:
         skin_compatibility_score = 0
 
         for tag in tags:
-            if tag in skin_type_tags[skin_type.lower()]:
+            if tag in skin_type_tags[skin_type.lower().strip()]:
                 skin_compatibility_score += 1
 
         return skin_compatibility_score
@@ -51,7 +51,7 @@ class Product:
                 product_scores[product] = score
 
         if not product_scores:
-            print("No suitable products found")
+            print("No suitable products found") # can remove this line. Frontend can print re no products found if this method returns []
             return []
 
 
@@ -59,15 +59,6 @@ class Product:
 
         return product_recommendations[:limit]
 
-# refine below (testing to see everything works)
-product1 = Product("12", "BrandA", "PRoductA", "20.00", "Sample product", "Foundation", ["hypoallergenic"], "powder", "brown")
-product2 = Product("124", "BrandB", "PRoductB", "10.00", "Sample product", "Lipstick", ["oil free", "vegan", "alcohol free"], "liquid", "pink")
-prods = [product1, product2]
-
-# similar implementation to be used in frontend
-all_recs = Product.get_skin_recommendations(prods, "dry", len(prods))
-for product, score in all_recs:
-    print(f"Product: {product.get_name()}, score: {score}")
 
 if __name__ == "__main__":
     pass
