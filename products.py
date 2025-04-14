@@ -21,7 +21,7 @@ class Product:
               f"Description: {self.__description}")
 
     # this function gets called in static method for each product in list.
-    def check_suitable_for_skin_type(self, skin_type):
+    def get_skin_compatibility(self, skin_type):
         tags = [tag.lower() for tag in self.__tag_list]
 
         skin_type_tags = {
@@ -41,14 +41,19 @@ class Product:
 
         return skin_compatibility_score
 
-    # method takes list of products, skin_type, and limit number of products to be recommended
+    # method takes list of products, skin_type, and limit number of products to be recommended (user input will determine skin type and limit)
     @staticmethod
-    def recommend_products_for_skin_type(products, skin_type, limit):
+    def get_skin_recommendations(products, skin_type, limit):
         product_scores = {}
         for product in products:
-            score = product.check_suitable_for_skin_type(skin_type)
+            score = product.get_skin_compatibility(skin_type)
             if score > 0:
                 product_scores[product] = score
+
+        if not product_scores:
+            print("No suitable products found")
+            return []
+
 
         product_recommendations = sorted(product_scores.items(), key=lambda x: x[1], reverse=True)
 
@@ -60,8 +65,9 @@ product2 = Product("124", "BrandB", "PRoductB", "10.00", "Sample product", "Lips
 prods = [product1, product2]
 
 # similar implementation to be used in frontend
-all_recs = Product.recommend_products_for_skin_type(prods, "dry", len(prods))
-print(all_recs)
-print("------------------------")
+all_recs = Product.get_skin_recommendations(prods, "dry", len(prods))
 for product, score in all_recs:
     print(f"Product: {product.get_name()}, score: {score}")
+
+if __name__ == "__main__":
+    pass
