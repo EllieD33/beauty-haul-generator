@@ -19,6 +19,18 @@ def get_products_by_brand(brand):
 def get_products_by_type(type):
     pass
 
+
+"""
+
+When sending multiple tags in the API call, it only pulls the products which contain all of the tags sent in the call. 
+This limits the number of products greatly. Therefore, looping the requests to get products that have at least one of the 
+tags will increase the number of recommendations to give to the user. This also complements the scoring system set up in the 
+Product class. 
+
+This does, however, create duplication - a product that has an "oil free" tag as well as a "natural" tag will be pulled twice
+as two calls are being made. This is dealt with by storing products by their id in the unique_products dictionary. 
+
+"""
 def get_skin_type_products(skin_type, limit):
     skin_type_tags = {
         "oily": ["oil free", "hypoallergenic", "natural", "silicone free"],
@@ -30,9 +42,10 @@ def get_skin_type_products(skin_type, limit):
     }
 
     tags = skin_type_tags[skin_type]
+    all_api_products = []
     unique_products = {}
 
-    all_api_products = []
+
     for tag in tags:
         tag_params = {"product_tags": tag}
         response = requests.get(url=ENDPOINT, params=tag_params)
@@ -61,7 +74,7 @@ def get_skin_type_products(skin_type, limit):
 
     recommended_products = Product.get_skin_recommendations(product_list, skin_type, limit)
 
-    return recommended_products
+    return recommended_products # returns list of Product objects
 
 # FOR FRONTEND - just testing here
 user_recs = (get_skin_type_products("acne-prone", 10))
