@@ -1,6 +1,5 @@
 # File containing utility functions for accessing database.
 import csv
-from fileinput import close
 
 
 def save_routine(routine, filename="data/user_routines.csv"):
