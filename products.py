@@ -27,8 +27,8 @@ class Product:
         skin_type_tags = {
             "oily": ["oil free", "hypoallergenic", "natural", "silicone free"],
             "dry": ["alcohol free", "natural", "hypoallergenic", "vegan"],
-            "sensitive": ["hypoallergenic", "alcohol free", "natural"],
-            "acne-prone": ["oil free", "hypoallergenic", "silicone free", "alcohol free", "natural"],
+            "sensitive": ["hypoallergenic", "alcohol free", "natural", "organic"],
+            "acne-prone": ["oil free", "hypoallergenic", "silicone free", "alcohol free", "natural", "organic"],
             "combination": ["hypoallergenic", "natural", "oil free", "alcohol free"],
             "normal": ["natural", "vegan", "hypoallergenic"]
         }

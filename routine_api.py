@@ -23,8 +23,8 @@ def get_skin_type_products(skin_type, limit):
     skin_type_tags = {
         "oily": ["oil free", "hypoallergenic", "natural", "silicone free"],
         "dry": ["alcohol free", "natural", "hypoallergenic", "vegan"],
-        "sensitive": ["hypoallergenic", "alcohol free", "natural"],
-        "acne-prone": ["oil free", "hypoallergenic", "silicone free", "alcohol free", "natural"],
+        "sensitive": ["hypoallergenic", "alcohol free", "natural", "organic"],
+        "acne-prone": ["oil free", "hypoallergenic", "silicone free", "alcohol free", "natural", "organic"],
         "combination": ["hypoallergenic", "natural", "oil free", "alcohol free"],
         "normal": ["natural", "vegan", "hypoallergenic"]
     }
@@ -64,10 +64,9 @@ def get_skin_type_products(skin_type, limit):
     return recommended_products
 
 # FOR FRONTEND - just testing here
-user_recs = (get_skin_type_products("normal", 10))
+user_recs = (get_skin_type_products("acne-prone", 10))
 
 print("RECOMMENDED PRODUCTS: ")
 for product, score in user_recs:
     product.display_info()
-    print(f"Compatibility score: {score}")
-    print()
+    print(f"Compatibility score: {score}\n")
