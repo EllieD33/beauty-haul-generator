@@ -12,19 +12,19 @@ def equal_sign_decorator(func):
         print("=" * 40)
     return inner
 
-#get the correct variable name for the routine from the API file, for now is called ROUTINE and RESPONSES are user preferences
+
 
 class RoutineDisplay:
-    def __init__(self, ROUTINE, RESPONSES):
-        self.routine = ROUTINE
-        self.responses = RESPONSES
-    #
+    def __init__(self, routine, responses):
+        self.routine = routine
+        self.responses = responses
+
     #check if the routine is empty
     def check_if_routine_empty(self):
         if not self.routine:
             print(f"Oops, we couldn't find any products that matched your preferences! Maybe we can alter something and try again? 🔄")
             return
-    #
+
     @staticmethod
     @equal_sign_decorator
     def display_title():
@@ -58,8 +58,8 @@ class UserHappiness:
 
 
 class SaveRoutine:
-    def __init__(self, routine_data):
-        self.routine = routine_data
+    def __init__(self, routine):
+        self.routine = routine
 
     def save_routine(self):
         save_routine(self.routine, filename="data/user_routines.csv")
