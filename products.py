@@ -59,6 +59,37 @@ class Product:
 
         return product_recommendations[:limit]
 
+    @staticmethod
+    def convert_to_products(data):
+
+        product_object_list = []
+
+        for item in data:
+            product_id = item.get("id")
+            brand = item.get("brand")
+            name = item.get("name")
+            price = item.get("price")
+            description = item.get("description")
+            product_type = item.get("product_type")
+            tag_list = item.get("tag_list", [])
+            category = item.get("category")
+            product_colours = item.get("product_colors", [])
+
+            product_object = Product(
+                product_id=product_id,
+                brand = brand,
+                name = name,
+                price = price,
+                description = description,
+                product_type = product_type,
+                tag_list = tag_list,
+                category = category,
+                product_colours = product_colours
+            )
+
+            product_object_list.append(product_object)
+
+        return product_object_list
 
 if __name__ == "__main__":
     pass

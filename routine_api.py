@@ -3,21 +3,28 @@ from products import Product
 
 ENDPOINT = "http://makeup-api.herokuapp.com/api/v1/products.json"
 
+
 def get_all_products():
     response = requests.get(url=ENDPOINT)
     response.raise_for_status()
     data = response.json()
-    return data
+    return Product.convert_to_products(data)
+
 
 def get_products_by_brand(brand):
     brand_params = {"brand": brand}
     response = requests.get(url=ENDPOINT, params=brand_params)
     response.raise_for_status()
     data = response.json()
-    return data
+    return Product.convert_to_products(data)
 
-def get_products_by_type(type):
-    pass
+
+def get_products_by_type(prod_type):
+    type_params = {"product_type": prod_type}
+    response = requests.get(url=ENDPOINT, params=type_params)
+    response.raise_for_status()
+    data = response.json()
+    return Product.convert_to_products(data)
 
 
 """
@@ -31,6 +38,8 @@ This does, however, create duplication - a product that has an "oil free" tag as
 as two calls are being made. This is dealt with by storing products by their id in the unique_products dictionary. 
 
 """
+
+
 def get_skin_type_products(skin_type, limit):
     skin_type_tags = {
         "oily": ["oil free", "hypoallergenic", "natural", "silicone free"],
@@ -43,8 +52,8 @@ def get_skin_type_products(skin_type, limit):
 
     tags = skin_type_tags[skin_type]
     all_api_products = []
-    unique_products = {}
-
+    unique_product_ids = set()
+    unique_products = []
 
     for tag in tags:
         tag_params = {"product_tags": tag}
@@ -56,30 +65,26 @@ def get_skin_type_products(skin_type, limit):
     for api_product in all_api_products:
         product_id = api_product.get("id")
 
-        if product_id not in unique_products:
-            product = Product(
-                product_id=product_id,
-                brand=api_product.get("brand"),
-                name=api_product.get("name"),
-                price=api_product.get("price"),
-                description=api_product.get("description"),
-                product_type=api_product.get("product_type"),
-                tag_list=api_product.get("tag_list", []),
-                category=api_product.get("category"),
-                product_colours=api_product.get("product_colours", [])
-            )
-            unique_products[product_id] = product
+        if product_id not in unique_product_ids:
+            unique_products.append(api_product)
+            unique_product_ids.add(product_id)
 
-    product_list = list(unique_products.values())
+    # Creating product objects from Product class and storing the objects in product_list.
+    product_list = Product.convert_to_products(unique_products)
 
     recommended_products = Product.get_skin_recommendations(product_list, skin_type, limit)
 
-    return recommended_products # returns list of Product objects
+    return recommended_products  # returns list of the recommended Product objects
 
 # FOR FRONTEND - just testing here
-user_recs = (get_skin_type_products("acne-prone", 10))
+# user_recs = (get_skin_type_products("normal", 10))
+#
+# print("RECOMMENDED PRODUCTS: ")
+# for product, score in user_recs:
+#     product.display_info()
+#     print(f"Compatibility score: {score}\n")
 
-print("RECOMMENDED PRODUCTS: ")
-for product, score in user_recs:
-    product.display_info()
-    print(f"Compatibility score: {score}\n")
+# fenty_prods = (get_products_by_brand("fenty"))
+#
+# for item in fenty_prods:
+#     item.display_info()
