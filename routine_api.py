@@ -8,7 +8,7 @@ def get_all_products():
     response = requests.get(url=ENDPOINT)
     response.raise_for_status()
     data = response.json()
-    return Product.convert_to_products(data)
+    return Product.convert_to_products(data) # returns list of product objects
 
 
 def get_products_by_brand(brand):
@@ -22,6 +22,13 @@ def get_products_by_brand(brand):
 def get_products_by_type(prod_type):
     type_params = {"product_type": prod_type}
     response = requests.get(url=ENDPOINT, params=type_params)
+    response.raise_for_status()
+    data = response.json()
+    return Product.convert_to_products(data)
+
+def get_products_by_price(less_than):
+    price_params = {"price_less_than": less_than}
+    response = requests.get(url=ENDPOINT, params=price_params)
     response.raise_for_status()
     data = response.json()
     return Product.convert_to_products(data)
@@ -77,14 +84,18 @@ def get_skin_type_products(skin_type, limit):
     return recommended_products  # returns list of the recommended Product objects
 
 # FOR FRONTEND - just testing here
-# user_recs = (get_skin_type_products("normal", 10))
+# user_recs = get_skin_type_products("normal", 10)
 #
 # print("RECOMMENDED PRODUCTS: ")
 # for product, score in user_recs:
 #     product.display_info()
 #     print(f"Compatibility score: {score}\n")
 
-# fenty_prods = (get_products_by_brand("fenty"))
+# fenty_prods = (("fenty")
 #
 # for item in fenty_prods:
+#     item.display_info()
+
+# price_prods = get_products_by_price(20)
+# for item in price_prods:
 #     item.display_info()
