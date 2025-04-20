@@ -42,7 +42,7 @@ tags will increase the number of recommendations to give to the user. This also 
 Product class. 
 
 This does, however, create duplication - a product that has an "oil free" tag as well as a "natural" tag will be pulled twice
-as two calls are being made. This is dealt with by storing products by their id in the unique_products dictionary. 
+as two calls are being made. This is dealt with by storing the product ids in the unique_product_ids set. 
 
 """
 
@@ -91,7 +91,7 @@ def get_skin_type_products(skin_type, limit):
 #     product.display_info()
 #     print(f"Compatibility score: {score}\n")
 
-# fenty_prods = (("fenty")
+# fenty_prods = get_products_by_brand("fenty")
 #
 # for item in fenty_prods:
 #     item.display_info()
