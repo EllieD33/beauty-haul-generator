@@ -1,6 +1,7 @@
 # This is the client-side of the application.
-from routine_display import RoutineDisplay, UserHappiness
+from routine_display import RoutineDisplay, UserHappiness, SaveRoutine
 from user_input import UserInputCollector, InputValidator
+from routine_api import get_skin_type_products
 
 #
 def get_user_consent(input_collector):
@@ -16,7 +17,7 @@ def get_user_consent(input_collector):
         else:
             print("⚠️ Please enter 'Y' or 'N'.")
 
-def is_user_happy(question="What do you think? Would you like to save this routine or should we change anything?"):
+def is_user_happy(routine, question="What do you think? Would you like to save this routine or should we change anything?"):
     while True:
         print(question)
         print(f"1️⃣Save routine")
@@ -44,13 +45,25 @@ def main():
 
     get_user_consent(input_collector)
 
-    # get user preferences
+    # get user preferences -- practice to check works with RoutineDisplay class
+    # print("lets get the users preferences")
+    # skin_type = "normal"
+    # limit = 5
+    # responses = {"skin_type": skin_type, "limit": limit}
 
     # get API generated routine
+    routine = get_skin_type_products(skin_type, limit)
+
+    routine_display = RoutineDisplay(routine, responses)
 
     # display output functions
+    routine_display.check_if_routine_empty()
+    if routine:
+        routine_display.display_title()
+        routine_display.display_routine()
 
-    is_user_happy()
+
+    is_user_happy(routine)
 
 
 

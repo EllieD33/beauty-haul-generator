@@ -2,7 +2,7 @@
 
 from db_utils import save_routine
 from products import Product
-#connect API file to this file
+from routine_api import get_skin_type_products
 
 #equals sign decorator to surround the display title
 def equal_sign_decorator(func):
@@ -32,20 +32,25 @@ class RoutineDisplay:
 
     def display_routine(self):
         #loop through the products in the routine dictionary / list and print each
+
         print(f"Based on your preferences of {self.responses}, this is what we have chosen: ")
         for product, score in self.routine:
-            print(f"Category: {product['category']}")
-            print(f"Name: {product['name']}")
-            print(f"Price: {product['price']}")
-            print(f"Match score for your skin type: {score}")
+            product.display_info()
+            print(f"Compatibility score: {score}\n")
+            # print(f"Category: {product['category']}")
+            # print(f"Name: {product['name']}")
+            # print(f"Price: {product['price']}")
+            # print(f"Match score for your skin type: {score}")
+
 
 
 
 class UserHappiness:
     @staticmethod
-    def ask_if_user_happy(user_choice):
+    def ask_if_user_happy(user_choice, routine):
         if user_choice == 1:
-            SaveRoutine.save_routine()
+            routine_saver = SaveRoutine(routine)
+            routine_saver.save_routine()
             print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
             return "save"
         elif user_choice == 2:
