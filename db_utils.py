@@ -1,11 +1,19 @@
 # File containing utility functions for accessing database.
 import csv
+import os.path
 
 
 def save_routine(routine, filename="data/user_routines.csv"):
-    headers = ["Category", "Name", "Price"]
-    with open(filename, "a") as csv_file:
+    headers = ["Brand", "Product", "Price", "Description"]
+    #check if file exists
+    file_exists = os.path.exists(filename)
+
+    with open(filename, "a", newline="") as csv_file:
         writer=csv.DictWriter(csv_file, fieldnames=headers)
-        writer.writeheader()
+
+        #if the file is empty, write the headers
+        if not file_exists or os.path.getsize(filename) == 0:
+            writer.writeheader()
+
         writer.writerows(routine)
     print("Your routine has been saved successfully!💾")
