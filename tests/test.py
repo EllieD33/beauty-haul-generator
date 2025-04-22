@@ -12,5 +12,14 @@ class TestInputValidator(unittest.TestCase):
         self.assertFalse(InputValidator.validate_yes_no("No"))
         self.assertFalse(InputValidator.validate_yes_no(""))
 
+    def test_validate_numeric_choices(self):
+        self.assertTrue(InputValidator.validate_numeric_choices("1", 1, 2))
+        self.assertTrue(InputValidator.validate_numeric_choices("2", 1, 2))
+        self.assertFalse(InputValidator.validate_numeric_choices("3", 1, 2))
+        self.assertFalse(InputValidator.validate_numeric_choices("", 1, 5))
+        self.assertTrue(InputValidator.validate_numeric_choices("4", 1, 5))
+        self.assertFalse(InputValidator.validate_numeric_choices("t", 1, 5))
+
+
 if __name__ == '__main__':
     unittest.main()
