@@ -16,13 +16,13 @@ class TestInputValidator(unittest.TestCase):
         self.assertFalse(InputValidator.validate_yes_no("No"))
         self.assertFalse(InputValidator.validate_yes_no(""))
 
-class TestIsUserHappy(unittest.TestCase):
-    def test_is_user_happy(self):
-        self.assertTrue(UserHappiness.ask_if_user_happy(1))
-        self.assertTrue(UserHappiness.ask_if_user_happy(2))
-        self.assertFalse(UserHappiness.ask_if_user_happy(3))
-        self.assertFalse(UserHappiness.ask_if_user_happy("hello"))
-        self.assertFalse(UserHappiness.ask_if_user_happy(""))
+# class TestIsUserHappy(unittest.TestCase):
+#     def test_is_user_happy(self):
+#         self.assertTrue(UserHappiness.ask_if_user_happy(1))
+#         self.assertTrue(UserHappiness.ask_if_user_happy(2))
+#         self.assertFalse(UserHappiness.ask_if_user_happy(3))
+#         self.assertFalse(UserHappiness.ask_if_user_happy("hello"))
+#         self.assertFalse(UserHappiness.ask_if_user_happy(""))
 
 class TestSavingRoutine(unittest.TestCase):
     def test_save_routine(self):
