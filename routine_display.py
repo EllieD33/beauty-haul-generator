@@ -46,24 +46,9 @@ class RoutineDisplay:
 
 
 class UserHappiness:
-        @staticmethod
-        def is_satisfied(response):
-            return response.strip() == "1"
-    # @staticmethod
-    # def ask_if_user_happy(user_choice, routine):
-    #     if user_choice == 1:
-    #         routine_saver = SaveRoutine(routine)
-    #         routine_saver.save_routine()
-    #         print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
-    #         return "save"
-    #     elif user_choice == 2:
-    #         print("Don't worry, lets start again!✨")
-    #         # method to go back to user input methods
-    #         return "modify"
-    #     else:
-    #         print("⚠️ Invalid input, please enter 1 or 2: ")
-    #         return None
-
+    @staticmethod
+    def is_satisfied(response):
+        return response.strip() == "1"
 
 
 class SaveRoutine:
