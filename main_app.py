@@ -4,7 +4,7 @@ from user_input import UserInputCollector, InputValidator
 
 def get_user_consent(input_collector):
     while True:
-        response = input_collector.ask_question("\n🪄 Shall we get started? Y / N")
+        response = input_collector.ask_question("\n🪄 Shall we get started? Y / N").strip()
         if InputValidator.validate_yes_no(response):
             if response.upper() == "Y":
                 print("\n💫 Let's glow! 💫\n")
