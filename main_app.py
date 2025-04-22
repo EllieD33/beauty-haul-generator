@@ -1,5 +1,7 @@
 # This is the client-side of the application.
+from routine_display import RoutineDisplay, UserHappiness, SaveRoutine
 from user_input import UserInputCollector, InputValidator
+from routine_api import get_skin_type_products
 
 
 def print_welcome_screen():
@@ -47,6 +49,27 @@ def main():
     else:
         print("Don't worry, lets start again!✨")
         pass  # Call the refinement flow (or start again?)
+
+    # get user preferences -- practice to check works with RoutineDisplay class
+    print("lets get the users preferences")
+    skin_type = "normal"
+    limit = 5
+    responses = {"skin_type": skin_type, "limit": limit}
+
+    # get API generated routine
+    routine = get_skin_type_products(skin_type, limit)
+
+    routine_display = RoutineDisplay(routine, responses)
+
+    # display output functions
+    routine_display.check_if_routine_empty()
+    if routine:
+        routine_display.display_title()
+        routine_display.display_routine()
+
+
+    is_user_happy(routine)
+
 
 
 if __name__ == "__main__":
