@@ -30,3 +30,8 @@ class InputValidator:
     def validate_numeric_choices(response, lowest_valid_num, highest_valid_num):
         options = [str(i) for i in range(lowest_valid_num, highest_valid_num + 1)]
         return response in options
+
+    @staticmethod
+    def validate_string_choices(response, valid_strings_list):
+        options = [i.lower() for i in valid_strings_list]
+        return response.lower() in options
