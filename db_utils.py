@@ -22,5 +22,5 @@ def save_routine(routine, filename="data/user_routines.csv"):
         if not file_exists or os.path.getsize(filename) == 0:
             writer.writeheader()
 
-        writer.writerows(routine)
+        writer.writerows(routine_dict)
     print("Your routine has been saved successfully!💾")
