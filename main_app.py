@@ -27,7 +27,7 @@ def is_user_happy(routine, question="What do you think? Would you like to save t
         except ValueError:
             print("⚠️Invalid input! Please enter a number (1 or 2).")
             continue
-        output = UserHappiness.ask_if_user_happy(user_choice)
+        output = UserHappiness.ask_if_user_happy(user_choice, routine)
         if output == "save":
             return output
         elif output == "modify":
@@ -46,10 +46,10 @@ def main():
     get_user_consent(input_collector)
 
     # get user preferences -- practice to check works with RoutineDisplay class
-    # print("lets get the users preferences")
-    # skin_type = "normal"
-    # limit = 5
-    # responses = {"skin_type": skin_type, "limit": limit}
+    print("lets get the users preferences")
+    skin_type = "normal"
+    limit = 5
+    responses = {"skin_type": skin_type, "limit": limit}
 
     # get API generated routine
     routine = get_skin_type_products(skin_type, limit)
