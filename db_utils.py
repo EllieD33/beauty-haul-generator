@@ -23,4 +23,4 @@ def save_routine(routine, filename="data/user_routines.csv"):
             writer.writeheader()
 
         writer.writerows(routine_dict)
-    print("Your routine has been saved successfully!💾")
+    print("\nYour routine has been saved successfully! 💾")

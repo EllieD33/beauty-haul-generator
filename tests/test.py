@@ -3,8 +3,8 @@ import unittest
 import csv
 import os
 
+from routine_display import UserHappiness
 from user_input import InputValidator
-from routine_display import RoutineDisplay, UserHappiness
 from db_utils import save_routine
 
 
@@ -30,13 +30,11 @@ class TestInputValidator(unittest.TestCase):
         self.assertFalse(InputValidator.validate_string_choices("", ["Oily", "Normal", "Dry"]))
 
 
-# class TestIsUserHappy(unittest.TestCase):
-#     def test_is_user_happy(self):
-#         self.assertTrue(UserHappiness.ask_if_user_happy(1))
-#         self.assertTrue(UserHappiness.ask_if_user_happy(2))
-#         self.assertFalse(UserHappiness.ask_if_user_happy(3))
-#         self.assertFalse(UserHappiness.ask_if_user_happy("hello"))
-#         self.assertFalse(UserHappiness.ask_if_user_happy(""))
+class TestIsUserHappy(unittest.TestCase):
+    def test_is_user_happy(self):
+        self.assertTrue(UserHappiness.is_satisfied("1"))
+        self.assertFalse(UserHappiness.is_satisfied("2"))
+
 
 class TestSavingRoutine(unittest.TestCase):
     def test_save_routine(self):
@@ -62,8 +60,6 @@ class TestSavingRoutine(unittest.TestCase):
             print("Test file removed ✅")
         else:
             print("No test file found, no removal needed")
-
-
 
 
 if __name__ == '__main__':

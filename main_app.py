@@ -27,14 +27,11 @@ def get_user_consent(input_collector):
 
 
 def is_user_satisfied(input_collector):
-    question = "\nWhat do you think? Would you like to save this routine or should we change anything? \n1️⃣ Save routine \n2️⃣Modify preferences\nPlease enter 1 or 2: "
+    question = "\nWhat do you think? Would you like to save this routine or should we change anything? \n1️⃣ Save routine \n2️⃣ Modify preferences\nPlease enter 1 or 2"
 
     response = input_collector.ask_question(question).strip()
     if InputValidator.validate_numeric_choices(response, 1, 2):
-        if response == "1":
-            return True
-        else:
-            return False
+        return UserHappiness.is_satisfied(response)
     else:
         print("⚠️ Invalid input! Please enter 1 or 2")
 
@@ -43,12 +40,6 @@ def main():
     print_welcome_screen()
     input_collector = UserInputCollector()
     get_user_consent(input_collector)
-    if is_user_satisfied(input_collector):
-        print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
-        pass  # Call the save routine method
-    else:
-        print("Don't worry, lets start again!✨")
-        pass  # Call the refinement flow (or start again?)
 
     # get user preferences -- practice to check works with RoutineDisplay class
     print("lets get the users preferences")
@@ -67,9 +58,14 @@ def main():
         routine_display.display_title()
         routine_display.display_routine()
 
-
-    is_user_happy(routine)
-
+    # Check if user is satisfied with recommended routine
+    if is_user_satisfied(input_collector):
+        routine_saver = SaveRoutine(routine)
+        routine_saver.save_routine()
+        print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
+    else:
+        print("Don't worry, lets start again!✨")
+        # Then call the refinement flow (or start again?)
 
 
 if __name__ == "__main__":
