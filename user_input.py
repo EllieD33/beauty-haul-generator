@@ -24,7 +24,7 @@ class UserInputCollector:
 class InputValidator:
     @staticmethod
     def validate_yes_no(response):
-        return response.upper() in ["Y", "N"]
+        return response in ["Y", "N"]
 
     @staticmethod
     def validate_numeric_choices(response, lowest_valid_num, highest_valid_num):
