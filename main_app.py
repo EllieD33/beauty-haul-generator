@@ -2,6 +2,14 @@
 from user_input import UserInputCollector, InputValidator
 
 
+def print_welcome_screen():
+    print("\n✨💄 Welcome to the beauty haul generator 💄✨\n")
+    print("📌 Here's how this works...\n")
+    print("1️⃣ I'll ask some questions about you.")
+    print("2️⃣ I'll work my magic to generate you a new haul.")
+    print("3️⃣ You can work your own magic armed with your new haul!\n")
+
+
 def get_user_consent(input_collector):
     while True:
         response = input_collector.ask_question("\n🪄 Shall we get started? Y / N").strip().upper()
@@ -31,16 +39,9 @@ def is_user_satisfied(input_collector):
 
 
 def main():
-    print("\n✨💄 Welcome to the beauty haul generator 💄✨\n")
-    print("📌 Here's how this works...\n")
-    print("1️⃣ I'll ask some questions about you.")
-    print("2️⃣ I'll work my magic to generate you a new haul.")
-    print("3️⃣ You can work your own magic armed with your new haul!\n")
-
+    print_welcome_screen()
     input_collector = UserInputCollector()
-
     get_user_consent(input_collector)
-
     if is_user_satisfied(input_collector):
         print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
         pass # Call the save routine method
