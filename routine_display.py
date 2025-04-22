@@ -59,6 +59,7 @@ class UserHappiness:
             return "modify"
         else:
             print("⚠️ Invalid input, please enter 1 or 2: ")
+            return None
 
 
 
