@@ -16,7 +16,7 @@ class Product:
 
     # getter
     def display_info(self):
-        print(f"Brand: {self.__brand}, Product: {self.__name} ({self.__product_type})\n"
+        print(f"Brand: {self.__brand}\n Product: {self.__name} ({self.__product_type})\n"
               f"Price: {self.__price}\n"
               f"Description: {self.__description}")
 
@@ -90,6 +90,15 @@ class Product:
             product_object_list.append(product_object)
 
         return product_object_list
+
+    # this method converts the outputted tuple into a dictionary
+    def routine_to_dict(self):
+        return {
+            "Brand": self.__brand,
+            "Product": self.__name,
+            "Price": self.__price,
+            "Description": self.__description
+        }
 
 if __name__ == "__main__":
     pass
