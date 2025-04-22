@@ -37,19 +37,16 @@ def is_user_satisfied(input_collector):
         print("⚠️ Invalid input! Please enter 1 or 2")
 
 
-
 def main():
     print_welcome_screen()
     input_collector = UserInputCollector()
     get_user_consent(input_collector)
     if is_user_satisfied(input_collector):
         print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
-        pass # Call the save routine method
+        pass  # Call the save routine method
     else:
         print("Don't worry, lets start again!✨")
-        pass # Call the refinement flow (or start again?)
-
-
+        pass  # Call the refinement flow (or start again?)
 
 
 if __name__ == "__main__":

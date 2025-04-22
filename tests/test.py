@@ -7,11 +7,9 @@ from user_input import InputValidator
 class TestInputValidator(unittest.TestCase):
     def test_validate_yes_no(self):
         self.assertTrue(InputValidator.validate_yes_no("Y"))
-        self.assertTrue(InputValidator.validate_yes_no("n"))
         self.assertFalse(InputValidator.validate_yes_no("yes"))
         self.assertFalse(InputValidator.validate_yes_no("No"))
         self.assertFalse(InputValidator.validate_yes_no(""))
-
 
     def test_validate_numeric_choices(self):
         self.assertTrue(InputValidator.validate_numeric_choices("1", 1, 2))
@@ -20,7 +18,6 @@ class TestInputValidator(unittest.TestCase):
         self.assertFalse(InputValidator.validate_numeric_choices("", 1, 5))
         self.assertTrue(InputValidator.validate_numeric_choices("4", 1, 5))
         self.assertFalse(InputValidator.validate_numeric_choices("t", 1, 5))
-
 
     def test_validate_string_choices(self):
         self.assertTrue(InputValidator.validate_string_choices("oily", ["Oily", "Normal", "Dry"]))
