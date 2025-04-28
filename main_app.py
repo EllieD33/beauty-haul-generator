@@ -201,7 +201,7 @@ def main():
         print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
     else:
         print("Don't worry, lets start again!✨")
-        # Then call the refinement flow (or start again?)
+        main()
 
 
 if __name__ == "__main__":
