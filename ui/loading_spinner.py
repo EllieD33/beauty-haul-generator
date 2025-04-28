@@ -14,13 +14,10 @@ class Spinner:
         )
 
     def spin(self):
-        # spinner = ["-", "\\", "|", "/"]
-        # spinner = [".", "..", "...", "....", "....."]
-        # spinner = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
         spinner = ["✦", "✧", "✩", "✪", "✫", "✬", "✭", "✮", "✯", "✰"]
         n = 0
         while True:
-            print(f"\r{self.message} {spinner[n]}", end="")
+            print(f"\r{spinner[n]} {self.message} ", end="")
             n += 1
             if n >= len(spinner):
                 n = 0

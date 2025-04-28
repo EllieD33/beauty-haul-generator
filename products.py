@@ -16,6 +16,9 @@ class Product:
         self.__relevance_score += score
 
     # Getters
+    def get_product_id(self):
+        return self.__id
+
     def get_name(self):
         return self.__name
 

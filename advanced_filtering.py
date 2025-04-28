@@ -22,7 +22,7 @@ class AdvancedFilter:
     @staticmethod
     def filter_by_relevance(priorities, product_type, budget, products):
         priority_function_map = {
-            "1": lambda b, p: priorities.apply_budget(b, p),
+            "1": lambda b, p: AdvancedFilter.apply_budget(b, p),
             "2": get_vegan_products,
             "3": get_eco_products,
             "4": get_natural_products

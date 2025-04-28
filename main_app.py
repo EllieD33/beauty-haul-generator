@@ -1,6 +1,7 @@
 # This is the client-side of the application.
 from advanced_filtering import AdvancedFilter
 from routine_display import RoutineDisplay, UserHappiness, SaveRoutine
+from ui.loading_spinner import Spinner
 from user_input import UserInputCollector, InputValidator
 from routine_api import get_skin_type_products
 from user_preferences import UserPreferences
@@ -171,7 +172,13 @@ def main():
     if not get_user_consent(input_collector):
         return
     user_responses = collect_user_preferences(input_collector)
-    routine = [product for product in generate_routine(user_responses)]
+
+    app_spinner = Spinner(message="Generating your beauty haul")
+    app_spinner.start()
+    try:
+        routine = [product for product in generate_routine(user_responses)]
+    finally:
+        app_spinner.stop()
 
     routine_display = RoutineDisplay(routine, user_responses)
 
