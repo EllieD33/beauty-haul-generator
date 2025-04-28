@@ -13,7 +13,7 @@ class TestProducts(unittest.TestCase):
             tag_list=["Vegan"],
             product_type="Test type",
             category="Test category",
-            product_colours=[{"hex_value": "#E1BFC0", "colour_name": "this is a test colour"}]
+            product_colours=[{"hex_value": "#E1BFC0", "colour_name": "this is a test colour"}],
         )
 
         # Additional products for recommendation tests
@@ -65,22 +65,22 @@ class TestProducts(unittest.TestCase):
         self.assertEqual(self.product4.get_skin_compatibility("oily"), 0) # Testing empty list
 
         self.assertEqual(self.product.get_skin_compatibility("DRY"), 1)  # Testing capitals
-        self.assertEqual(self.product.get_skin_compatibility("  dry  "), 1)  # Testing whitespace
+        self.assertEqual(self.product.get_skin_compatibility("   dry   "), 1)  # Testing whitespace
 
     def test_get_skin_recommendations(self):
         prod_list = [self.product, self.product2, self.product3, self.product4]
-        recommendations = Product.get_skin_recommendations(prod_list, "sensitive", 4)
+        recommendations = Product.get_skin_recommendations(prod_list, "sensitive")
 
         self.assertEqual(len(recommendations), 2) # Testing correct number of recs returned.
 
     def test_get_skin_recommendations_empty(self):
         prod_list = []
-        recommendations = Product.get_skin_recommendations(prod_list, "sensitive", 4)
+        recommendations = Product.get_skin_recommendations(prod_list, "sensitive")
         self.assertEqual(len(recommendations), 0) # Testing if 0 recommendations when given empty list
 
     def test_get_skin_recommendations_no_match(self):
         prod_list = [self.product, self.product4]
-        recommendations = Product.get_skin_recommendations(prod_list, "oily", 6)
+        recommendations = Product.get_skin_recommendations(prod_list, "oily")
         self.assertEqual(len(recommendations), 0)
 
 

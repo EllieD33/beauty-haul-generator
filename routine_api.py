@@ -8,7 +8,7 @@ def get_all_products():
     response = requests.get(url=ENDPOINT)
     response.raise_for_status()
     data = response.json()
-    return Product.convert_to_products(data) # returns list of product objects
+    return Product.convert_to_products(data)  # returns list of product objects
 
 
 def get_products_by_brand(brand):
@@ -25,6 +25,7 @@ def get_products_by_type(prod_type):
     response.raise_for_status()
     data = response.json()
     return Product.convert_to_products(data)
+
 
 def get_products_by_price(less_than):
     price_params = {"price_less_than": less_than}
@@ -46,8 +47,46 @@ as two calls are being made. This is dealt with by storing the product ids in th
 
 """
 
+# Reusable function that fetches products with given tags, can optionally be given a product type to narrow results
+def get_products_by_tags(tags, product_type=None):
+    all_api_products = []
+    unique_product_ids = set()
+    unique_products = []
 
-def get_skin_type_products(skin_type, limit):
+    # Include tags in the parameters for the request
+    for tag in tags:
+        try:
+            tag_params = {"product_tags": tag}
+            if product_type:
+                # Add product type to params in provided
+                tag_params["product_type"] = product_type
+
+            response = requests.get(url=ENDPOINT, params=tag_params)
+            response.raise_for_status()
+            data = response.json()
+            all_api_products.extend(data)
+
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {http_err}")
+        except requests.exceptions.RequestException as err:
+            print(f"Error occurred: {err}")
+        except ValueError as json_err:
+            print(f"Error decoding JSON: {json_err}")
+
+    # Deduplicate products by ID
+    for api_product in all_api_products:
+        product_id = api_product.get("id")
+
+        if product_id not in unique_product_ids:
+            unique_products.append(api_product)
+            unique_product_ids.add(product_id)
+
+    # Creating product objects from Product class and storing the objects in product_list.
+    product_list = Product.convert_to_products(unique_products)
+    return product_list
+
+
+def get_skin_type_products(skin_type):
     skin_type_tags = {
         "oily": ["oil free", "hypoallergenic", "natural", "silicone free"],
         "dry": ["alcohol free", "natural", "hypoallergenic", "vegan"],
@@ -58,44 +97,47 @@ def get_skin_type_products(skin_type, limit):
     }
 
     tags = skin_type_tags[skin_type]
-    all_api_products = []
-    unique_product_ids = set()
-    unique_products = []
+    product_list = get_products_by_tags(tags)
 
-    for tag in tags:
-        tag_params = {"product_tags": tag}
-        response = requests.get(url=ENDPOINT, params=tag_params)
-        response.raise_for_status()
-        data = response.json()
-        all_api_products.extend(data)
-
-    for api_product in all_api_products:
-        product_id = api_product.get("id")
-
-        if product_id not in unique_product_ids:
-            unique_products.append(api_product)
-            unique_product_ids.add(product_id)
-
-    # Creating product objects from Product class and storing the objects in product_list.
-    product_list = Product.convert_to_products(unique_products)
-
-    recommended_products = Product.get_skin_recommendations(product_list, skin_type, limit)
-
+    recommended_products = Product.get_skin_recommendations(product_list, skin_type)
     return recommended_products  # returns list of the recommended Product objects
 
-# FOR FRONTEND - just testing here
-# user_recs = get_skin_type_products("normal", 10)
-#
-# print("RECOMMENDED PRODUCTS: ")
-# for product, score in user_recs:
-#     product.display_info()
-#     print(f"Compatibility score: {score}\n")
 
-# fenty_prods = get_products_by_brand("fenty")
-#
-# for item in fenty_prods:
-#     item.display_info()
+def get_eco_products(product_type):
+    eco_conscious_tags = [
+        "Fair Trade",
+        "Vegan",
+        "Cruelty Free",
+        "CertClean",
+        "Natural",
+        "OrganicEcoCert",
+        "EWG Verified"
+    ]
 
-# price_prods = get_products_by_price(20)
-# for item in price_prods:
-#     item.display_info()
+    return get_products_by_tags(product_type, eco_conscious_tags)
+
+
+def get_vegan_products(product_type):
+    vegan_tags = [
+        "Vegan",
+        "Cruelty Free",
+        "Non-GMO",
+    ]
+
+    return get_products_by_tags(product_type, vegan_tags)
+
+
+def get_natural_products(product_type):
+    natural_tags = [
+        "Natural",
+        "Organic",
+        "USDA Organic",
+        "EcoCert",
+        "Chemical-free",
+        "Non-GMO",
+        "Purpicks"
+    ]
+
+    return get_products_by_tags(product_type, natural_tags)
+
+# print(get_eco_products("eyeliner"))
