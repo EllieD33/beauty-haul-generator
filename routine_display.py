@@ -36,9 +36,9 @@ class RoutineDisplay:
         # loop through the products in the routine dictionary / list and print each
 
         print(f"Based on your preferences of {self.responses}, this is what we have chosen: ")
-        for product, score in self.routine:
+        for product in self.routine:
             product.display_info()
-            print(f"Compatibility score: {score}\n")
+            # print(f"Compatibility score: {score}\n")
             # print(f"Category: {product['category']}")
             # print(f"Name: {product['name']}")
             # print(f"Price: {product['price']}")

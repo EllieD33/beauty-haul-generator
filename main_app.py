@@ -1,4 +1,5 @@
 # This is the client-side of the application.
+from advanced_filtering import AdvancedFilter
 from routine_display import RoutineDisplay, UserHappiness, SaveRoutine
 from user_input import UserInputCollector, InputValidator
 from routine_api import get_skin_type_products
@@ -35,107 +36,145 @@ def is_user_satisfied(input_collector):
     else:
         print("⚠️ Invalid input! Please enter 1 or 2")
 
-def collect_user_preferences():
+def collect_user_preferences(input_collector):
     preferences = UserPreferences()
-    input_collector = UserInputCollector()
+    # input_collector = UserInputCollector()
 
     #Outline valid product types
+    skin_types = ["Dry", "Oily", "Combination", "Normal", "Sensitive"]
+    budget_options = ["£", "££", "£££", "££££"]
     product_types = ["Blush", "Bronzer", "Eyebrow", "Eyeliner", "Eyeshadow", "Foundation", "Lip liner", "Lipstick", "Mascara", "Nail Polish"]
 
-
     # Get user skin type
-    while True:
-        skin_type = input_collector.ask_question("How would you describe your skin type? (Dry / Oily / Combination / Normal / Sensitive)").lower()
-        if preferences.set_skin_type(skin_type):
-            break
-        print("⚠️Please enter a skin type from the available options.")
+    response = input_collector.ask_question(f"How would you describe your skin type? ({' / '.join(i for i in skin_types)})").lower().strip()
+
+    if InputValidator.validate_string_choices(response, skin_types):
+        preferences.set_skin_type(response)
+        print(f"\n✅ Skin type set as: {preferences.get_skin_type()}.")
+    else:
+        print("⚠️ Please enter a valid skin type.")
 
     # Get user budget
-    while True:
-        budget = input_collector.ask_question("\nWhat is your current budget? (£ / ££ / £££ / ££££)")
-        if preferences.set_budget(budget):
-            break
-        print("⚠️Please enter a valid budget option.")
+    response = input_collector.ask_question(f"\nWhat is your current budget? ({', '.join(i for i in budget_options)})").strip()
+    if InputValidator.validate_string_choices(response, budget_options):
+        preferences.set_budget(response)
+        print(f"\n✅ Budget set as: {preferences.get_budget()}.")
+    else:
+        print("⚠️ Please enter a valid budget option.")
 
     # Collect product types
-    print("\n💄 Which products are you interested in?")
-    print("\nAvailable options: Blush / Bronzer / Eyebrow / Eyeliner / Eyeshadow / Foundation / Lip liner / Lipstick / Mascara / Nail Polish")
-    print("\nPlease enter chosen products separated by commas. Hit enter when done!")
+    products_question = f"\n💄 Which products are you interested in?\nAvailable options: {" / ".join(i for i in product_types)}.\nPlease enter chosen products separated by commas. Hit enter when done!\nDesired products"
 
     while True:
-        product_input = input("Desired products: ").strip()
-        if not product_input:
-            print("\n⚠️ Please enter valid products, separated by commas (e.g. 'Lipstick, Nail polish")
+        response = input_collector.ask_question(products_question).strip().lower()
+        if not response:
+            print("\n⚠️ Please enter valid products, separated by commas (e.g. 'lipstick, nail polish")
             continue
 
-        selected_products = []
-        for p in product_input.split(','):
-            product = p.strip()
-            available_product = next((pt for pt in product_types if pt.lower() == product.lower()),None)
-            if available_product:
-                selected_products.append(available_product)
-            else:
-                print(f"\n⚠️ '{product}' is not a valid product type.")
-                break
-        else:
-            if selected_products:
-                preferences.set_product_type(selected_products)
-                break
-            else:
-                print("\n⚠️ Please enter️ valid products, which must be separated by a comma.")
+        selected_products = [p.strip() for p in response.split(',') if p.strip()]
+        invalid = [p for p in selected_products if not InputValidator.validate_string_choices(p, product_types)]
 
-    # Collect brand preferences.
-    print("\n🏷️ Do you have any favorite brands?")
-    print("\nAvailable brands: Almay / Alva / Anna Sui / Annabelle / Benefit / Boosh / Burt's Bees / Butter London")
-    print("C'est Moi / Cargo Cosmetics / China Glaze / Clinique / Coastal Classic Creation / Colourpop")
-    print("Covergirl / Danish / Deciem / Dior / Dr. Hauschka / E.L.F / Essie / Fenty / Glossier")
-    print("Green People / Iman / L'Oreal / Lotus Cosmetics / Maia's Mineral Galaxy / Marcelle")
-    print("Marienatie / Maybelline / Milani / Mineral Fusion / Misa / Mistura / Moov / Nudus / Nyx")
-    print("Orly / Pacifica / Penny Lane Organics / Physicians Formula / Piggy Paint / Pure Anada")
-    print("Rejuva Minerals / Revlon / Sally B's Skin Yummies / Salon Perfect / Sante / Sinful Colours")
-    print("Smashbox / Stila / Suncoat / W3llpeople / Wet n Wild / Zorah / Zorah Biocosmetiques")
-    print("\nPlease enter chosen brands separated by commas, or press enter to skip.")
+        if invalid:
+            print(f"\n⚠️ Invalid product(s): {', '.join(invalid)}. Please try again.")
+            continue
 
+        preferences.set_product_type(selected_products)
+        print(f"\n✅ Desired product types successfully set as: {preferences.get_product_preference()}.")
+        break
+
+    rank_importance_question = f"\n⚖️ Rank these in order of importance to you: 1. Budget / 2. Vegan-friendly / 3. Eco-friendly / 4. Natural ingredients.\nWrite the numbers in order of importance, starting with the most important (e.g., 3, 2, 1, 4)"
     while True:
-        brand_input = input("Desired brands: ").strip()
-        if not brand_input:
-            print("🥳Looks like you're happy to try all of our brands!")
-            break
+        response = input_collector.ask_question(rank_importance_question)
+        if not response:
+            print("\n⚠️ Please enter valid numbers, separated by commas (e.g. '1, 3, 4, 2")
+            continue
 
-        brands = brand_input.split(',')
-        all_brands_valid = True
+        cleaned_response = [num.strip() for num in response.split(',') if num.strip()]
 
-        for brand in brands:
-            if not preferences.add_brand_preference(brand.strip()):
-                print(f"\n⚠️ '{brand.strip()}' is not a valid brand. Please try again.")
-                all_brands_valid = False
-                preferences.__brand_preference = []
+        valid = True
+        for num in cleaned_response:
+            if not InputValidator.validate_numeric_choices(num, 1, 4):
+                valid = False
                 break
 
-        if all_brands_valid:
-            print("\n✅ Brand(s) successfully added!")
+        if valid:
+            preferences.set_priorities(cleaned_response)
+            print(f"\n✅ Ranking successful.")
             break
+        else:
+            print("⚠️ Please enter valid numbers, separated by commas (e.g. '1, 3, 4, 2')")
 
-    return preferences
+    # # Collect brand preferences.
+    # print("\n🏷️ Do you have any favorite brands?")
+    # print("\nAvailable brands: Almay / Alva / Anna Sui / Annabelle / Benefit / Boosh / Burt's Bees / Butter London")
+    # print("C'est Moi / Cargo Cosmetics / China Glaze / Clinique / Coastal Classic Creation / Colourpop")
+    # print("Covergirl / Danish / Deciem / Dior / Dr. Hauschka / E.L.F / Essie / Fenty / Glossier")
+    # print("Green People / Iman / L'Oreal / Lotus Cosmetics / Maia's Mineral Galaxy / Marcelle")
+    # print("Marienatie / Maybelline / Milani / Mineral Fusion / Misa / Mistura / Moov / Nudus / Nyx")
+    # print("Orly / Pacifica / Penny Lane Organics / Physicians Formula / Piggy Paint / Pure Anada")
+    # print("Rejuva Minerals / Revlon / Sally B's Skin Yummies / Salon Perfect / Sante / Sinful Colours")
+    # print("Smashbox / Stila / Suncoat / W3llpeople / Wet n Wild / Zorah / Zorah Biocosmetiques")
+    # print("\nPlease enter chosen brands separated by commas, or press enter to skip.")
+    #
+    # while True:
+    #     brand_input = input("Desired brands: ").strip()
+    #     if not brand_input:
+    #         print("🥳Looks like you're happy to try all of our brands!")
+    #         break
+    #
+    #     brands = brand_input.split(',')
+    #     all_brands_valid = True
+    #
+    #     for brand in brands:
+    #         if not preferences.add_brand_preference(brand.strip()):
+    #             print(f"\n⚠️ '{brand.strip()}' is not a valid brand. Please try again.")
+    #             all_brands_valid = False
+    #             preferences.__brand_preference = []
+    #             break
+    #
+    #     if all_brands_valid:
+    #         print("\n✅ Brand(s) successfully added!")
+    #         break
+    return preferences.preferences_to_dict()
+
+
+def generate_routine(user_responses):
+    # Get products for users skin-type
+    product_list = get_skin_type_products(user_responses["skin_type"])
+    routine_filter = AdvancedFilter
+
+    # Remove product types the user has not specified as part of their routine
+    relevant_products = routine_filter.filter_product_types(user_responses["product_types"], product_list)
+
+    refined_product_list = []
+
+    # Apply advanced filtering for each product type user wants in their routine
+    for product_type in user_responses["product_types"]:
+        filtered_products = routine_filter.filter_by_relevance(
+            user_responses["priorities"], product_type, user_responses["budget"], relevant_products
+        )
+
+        # Add the filtered products to the refined list
+        refined_product_list.extend(filtered_products)
+
+    # Ensure no duplicates
+    refined_product_list = list(set(refined_product_list))
+
+    return refined_product_list
+
+
 
 def main():
     print_welcome_screen()
     input_collector = UserInputCollector()
-    if get_user_consent(input_collector):
-        user_preferences = collect_user_preferences()
-    else:
+    if not get_user_consent(input_collector):
         return
+    user_responses = collect_user_preferences(input_collector)
+    routine = [product for product in generate_routine(user_responses)]
 
-    skin_type = "normal"
-    limit = 5
-    responses = {"skin_type": skin_type, "limit": limit}
+    routine_display = RoutineDisplay(routine, user_responses)
 
-    # get API generated routine
-    routine = get_skin_type_products(skin_type, limit)
-
-    routine_display = RoutineDisplay(routine, responses)
-
-    # display output functions
+    # Display output functions
     routine_display.check_if_routine_empty()
     if routine:
         routine_display.display_title()
