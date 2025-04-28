@@ -90,10 +90,11 @@ def collect_user_preferences(input_collector):
             continue
 
         cleaned_response = [num.strip() for num in response.split(',') if num.strip()]
-
         valid = True
+        if not InputValidator.validate_complete_numeric_ranking(cleaned_response, 1, 4):
+            valid = False
         for num in cleaned_response:
-            if not InputValidator.validate_complete_numeric_ranking(num, 1, 4):
+            if not InputValidator.validate_numeric_choices(num, 1, 4):
                 valid = False
                 break
 

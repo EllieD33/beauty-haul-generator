@@ -30,11 +30,10 @@ class TestInputValidator(unittest.TestCase):
         self.assertFalse(InputValidator.validate_string_choices("", ["Oily", "Normal", "Dry"]))
 
     def test_complete_numeric_ranking(self):
-        self.assertTrue(InputValidator.validate_complete_numeric_ranking("1,2,3,4", 1, 4))
-        self.assertTrue(InputValidator.validate_complete_numeric_ranking("4, 1, 2, 3", 1, 4))
-        self.assertTrue(InputValidator.validate_complete_numeric_ranking("4 2 3 1", 1, 4))
-        self.assertFalse(InputValidator.validate_complete_numeric_ranking("1,2,3", 1, 4))
-        self.assertFalse(InputValidator.validate_complete_numeric_ranking("1,2,3,4,5", 1, 4))
+        self.assertTrue(InputValidator.validate_complete_numeric_ranking(["1","2","3","4"], 1, 4))
+        self.assertTrue(InputValidator.validate_complete_numeric_ranking(["4","1","2","3"], 1, 4))
+        self.assertFalse(InputValidator.validate_complete_numeric_ranking(["1","2","4"], 1, 4))
+        self.assertFalse(InputValidator.validate_complete_numeric_ranking(["1","2","3","4","5"], 1, 4))
 
 
 

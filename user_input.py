@@ -26,9 +26,10 @@ class InputValidator:
 
     @staticmethod
     def validate_complete_numeric_ranking(response, lowest_valid_num, highest_valid_num):
-        cleaned_response = response.replace(",", " ")
-        user_numbers = set(cleaned_response.strip().split())
+        user_numbers = set(response)
 
+        # Create a set of expected numbers in the specified range
         expected_numbers = {str(i) for i in range(lowest_valid_num, highest_valid_num + 1)}
 
-        return user_numbers == expected_numbers
+        # Check that the user's numbers match the expected numbers and there are no duplicates
+        return user_numbers == expected_numbers and len(response) == len(response)
