@@ -4,7 +4,7 @@ class Product:
         self.__brand = brand
         self.__name = name
         self.__price = price
-        self.__description = description
+        self.__description = description.split(".", 1)[0] + "."
         self.__product_type = product_type
         self.__tag_list = tag_list
         self.__category = category
