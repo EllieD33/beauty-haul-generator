@@ -14,7 +14,7 @@ def save_routine(routine, filename="data/user_routines.csv"):
         try:
             product_dict = product.routine_to_dict() # convert the products to a dictionary
             product_values = list(product_dict.values())
-            each_row = dict(zip(headers,product_values)) # combine the headers with the values in each row
+            each_row = dict(zip(headers, product_values)) # combine the headers with the values in each row
             routine_dict.append(each_row)
         except AttributeError as e:
             print(f"⚠️ Error processing product: {e}")
