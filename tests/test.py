@@ -29,6 +29,14 @@ class TestInputValidator(unittest.TestCase):
         self.assertFalse(InputValidator.validate_string_choices("random", ["Oily", "Normal", "Dry"]))
         self.assertFalse(InputValidator.validate_string_choices("", ["Oily", "Normal", "Dry"]))
 
+    def test_complete_numeric_ranking(self):
+        self.assertTrue(InputValidator.validate_complete_numeric_ranking("1,2,3,4", 1, 4))
+        self.assertTrue(InputValidator.validate_complete_numeric_ranking("4, 1, 2, 3", 1, 4))
+        self.assertTrue(InputValidator.validate_complete_numeric_ranking("4 2 3 1", 1, 4))
+        self.assertFalse(InputValidator.validate_complete_numeric_ranking("1,2,3", 1, 4))
+        self.assertFalse(InputValidator.validate_complete_numeric_ranking("1,2,3,4,5", 1, 4))
+
+
 
 class TestIsUserHappy(unittest.TestCase):
     def test_is_user_happy(self):
@@ -40,8 +48,8 @@ class TestSavingRoutine(unittest.TestCase):
     def test_save_routine(self):
         test_file = "test_user_routines.csv"
         test_data = [
-            {"Brand": "Fenty", "Product": "Foundation", "Price": "30", "Description": "Test description"},
-            {"Brand": "MAC", "Product": "Lipstick", "Price": "19.99", "Description": "MAC Ruby Woo Lipstick"}
+            {"Brand": "Fenty", "Product": "Foundation", "Price": "30", "Description": "Test description", "Score": 4},
+            {"Brand": "MAC", "Product": "Lipstick", "Price": "19.99", "Description": "MAC Ruby Woo Lipstick", "Score": 8}
         ]
         save_routine(test_data, filename=test_file)
         with open(test_file, "r") as csv_file:

@@ -13,7 +13,7 @@ class TestProducts(unittest.TestCase):
             tag_list=["Vegan"],
             product_type="Test type",
             category="Test category",
-            product_colours=[{"hex_value": "#E1BFC0", "colour_name": "this is a test colour"}]
+            product_colours=[{"hex_value": "#E1BFC0", "colour_name": "this is a test colour"}],
         )
 
         # Additional products for recommendation tests
@@ -65,7 +65,7 @@ class TestProducts(unittest.TestCase):
         self.assertEqual(self.product4.get_skin_compatibility("oily"), 0) # Testing empty list
 
         self.assertEqual(self.product.get_skin_compatibility("DRY"), 1)  # Testing capitals
-        self.assertEqual(self.product.get_skin_compatibility("  dry  "), 1)  # Testing whitespace
+        self.assertEqual(self.product.get_skin_compatibility("   dry   "), 1)  # Testing whitespace
 
     def test_get_skin_recommendations(self):
         prod_list = [self.product, self.product2, self.product3, self.product4]

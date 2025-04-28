@@ -11,15 +11,14 @@ class Product:
         self.__product_colours = product_colours
         self.__relevance_score = 0
 
-    # Setter
+    # Setters
     def set_relevance_score(self, score):
         self.__relevance_score += score
 
-    # getter
+    # Getters
     def get_name(self):
         return self.__name
 
-    # getter for product type
     def get_product_type(self):
         return self.__product_type
 
@@ -29,7 +28,6 @@ class Product:
     def get_relevance_score(self):
         return self.__relevance_score
 
-    # getter
     def display_info(self):
         print(f"Brand: {self.__brand}\n Product: {self.__name} ({self.__product_type})\n"
               f"Price: {self.__price}\n"
@@ -55,6 +53,7 @@ class Product:
                 skin_compatibility_score += 1
 
         self.set_relevance_score(skin_compatibility_score)
+        return skin_compatibility_score
 
     # method takes list of products and  skin_type (user input will determine skin type)
     @staticmethod
@@ -104,13 +103,14 @@ class Product:
         return product_object_list
 
     # this method converts the outputted tuple into a dictionary
-    def routine_to_dict(self):
-        return {
-            "Brand": self.__brand,
-            "Product": self.__name,
-            "Price": self.__price,
-            "Description": self.__description
-        }
+    # def routine_to_dict(self):
+    #     return {
+    #         "Brand": self.__brand,
+    #         "Product": self.__name,
+    #         "Price": self.__price,
+    #         "Description": self.__description,
+    #         "Score": self.__relevance_score
+    #     }
 
 
 if __name__ == "__main__":
