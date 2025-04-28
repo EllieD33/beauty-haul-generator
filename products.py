@@ -105,15 +105,15 @@ class Product:
 
         return product_object_list
 
-    # this method converts the outputted tuple into a dictionary
-    # def routine_to_dict(self):
-    #     return {
-    #         "Brand": self.__brand,
-    #         "Product": self.__name,
-    #         "Price": self.__price,
-    #         "Description": self.__description,
-    #         "Score": self.__relevance_score
-    #     }
+    # this method converts the product data into a dictionary
+    def routine_to_dict(self):
+        return {
+            "Brand": self.__brand,
+            "Product": self.__name,
+            "Price": self.__price,
+            "Description": self.__description,
+            "Score": self.__relevance_score
+        }
 
 
 if __name__ == "__main__":

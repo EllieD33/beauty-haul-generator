@@ -24,7 +24,7 @@ class RoutineDisplay:
     def check_if_routine_empty(self):
         if not self.routine:
             print(
-                f"Oops, we couldn't find any products that matched your preferences! Maybe we can alter something and try again? 🔄")
+                f"\n\nOops, we couldn't find any products that matched your preferences! Maybe we can alter something and try again? 🔄")
             return
 
     @staticmethod

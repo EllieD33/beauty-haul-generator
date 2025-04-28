@@ -47,21 +47,27 @@ def collect_user_preferences(input_collector):
     product_types = ["Blush", "Bronzer", "Eyebrow", "Eyeliner", "Eyeshadow", "Foundation", "Lip liner", "Lipstick", "Mascara", "Nail Polish"]
 
     # Get user skin type
-    response = input_collector.ask_question(f"How would you describe your skin type? ({' / '.join(i for i in skin_types)})").lower().strip()
+    while True:
+        response = input_collector.ask_question(f"How would you describe your skin type? ({' / '.join(i for i in skin_types)})").lower().strip()
 
-    if InputValidator.validate_string_choices(response, skin_types):
-        preferences.set_skin_type(response)
-        print(f"\n✅ Skin type set as: {preferences.get_skin_type()}.")
-    else:
-        print("⚠️ Please enter a valid skin type.")
+        if InputValidator.validate_string_choices(response, skin_types):
+            preferences.set_skin_type(response)
+            print(f"\n✅ Skin type set as: {preferences.get_skin_type()}.")
+            break
+        else:
+            print("⚠️ Please enter a valid skin type.")
+            continue
 
     # Get user budget
-    response = input_collector.ask_question(f"\nWhat is your current budget? ({', '.join(i for i in budget_options)})").strip()
-    if InputValidator.validate_string_choices(response, budget_options):
-        preferences.set_budget(response)
-        print(f"\n✅ Budget set as: {preferences.get_budget()}.")
-    else:
-        print("⚠️ Please enter a valid budget option.")
+    while True:
+        response = input_collector.ask_question(f"\nWhat is your current budget? ({', '.join(i for i in budget_options)})").strip()
+        if InputValidator.validate_string_choices(response, budget_options):
+            preferences.set_budget(response)
+            print(f"\n✅ Budget set as: {preferences.get_budget()}.")
+            break
+        else:
+            print("⚠️ Please enter a valid budget option.")
+            continue
 
     # Collect product types
     products_question = f"\n💄 Which products are you interested in?\nAvailable options: {" / ".join(i for i in product_types)}.\nPlease enter chosen products separated by commas. Hit enter when done!\nDesired products"
