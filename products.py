@@ -34,18 +34,19 @@ class Product:
     # helper function to extract first sentence of product description.
     def __extract_first_sentence(self, text):
         temp_text = text
-        temp_text = temp_text.replace("dr.", "dr_PLACEHOLDER")
-        temp_text = temp_text.replace("e.l.f.", "elf_PLACEHOLDER")
+        replacements = {
+            "dr.": "dr_PLACEHOLDER",
+            "e.l.f.": "elf_PLACEHOLDER"
+        }
+
+        for original, placeholder in replacements.items():
+            temp_text = temp_text.replace(original, placeholder)
 
         parts = temp_text.split(".", 1)
-        if len(parts) > 1:
-            first_sentence = parts[0] + "."
+        first_sentence = parts[0] + "." if len(parts) > 1 else text
 
-        else:
-            first_sentence = text
-
-        first_sentence = first_sentence.replace("dr_PLACEHOLDER", "dr.")
-        first_sentence = first_sentence.replace("elf_PLACEHOLDER", "e.l.f.")
+        for original, placeholder in replacements.items():
+            first_sentence = first_sentence.replace(placeholder, original)
 
         return first_sentence
 
