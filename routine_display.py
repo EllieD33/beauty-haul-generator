@@ -8,9 +8,11 @@ from routine_api import get_skin_type_products
 # equals sign decorator to surround the display title
 def equal_sign_decorator(func):
     def inner(*args, **kwargs):
+        print("\n")
         print("=" * 40)
         func(*args, **kwargs)
         print("=" * 40)
+        print("\n")
 
     return inner
 
