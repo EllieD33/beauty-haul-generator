@@ -1,8 +1,6 @@
 # Classes related to displaying the routine and saving the data
 
 from db_utils import save_routine
-from products import Product
-from routine_api import get_skin_type_products
 
 
 # equals sign decorator to surround the display title
@@ -45,12 +43,6 @@ class RoutineDisplay:
             # print(f"Name: {product['name']}")
             # print(f"Price: {product['price']}")
             # print(f"Match score for your skin type: {score}")
-
-
-class UserHappiness:
-    @staticmethod
-    def is_satisfied(response):
-        return response.strip() == "1"
 
 
 class SaveRoutine:
