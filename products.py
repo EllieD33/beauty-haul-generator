@@ -32,9 +32,10 @@ class Product:
         return self.__relevance_score
 
     def display_info(self):
-        print(f"Brand: {self.__brand}\n Product: {self.__name} ({self.__product_type})\n"
-              f"Price: {self.__price}\n"
-              f"Description: {self.__description}")
+        print(f"🧴 Product: {self.__name} by {self.__brand}")
+        print(f"💰 Price: {self.__price}")
+        print(f"📂 Type: {self.__product_type}")
+        print(f"📝 Description: {self.__description[:150] + "..." if len(self.__description) > 150 else self.__description}\n")
 
     # method gets called in static method for each product in list.
     def get_skin_compatibility(self, skin_type):
