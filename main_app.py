@@ -174,34 +174,38 @@ def generate_routine(user_responses):
 
 def main():
     print_welcome_screen()
+
     input_collector = UserInputCollector()
     if not get_user_consent(input_collector):
         return
-    user_responses = collect_user_preferences(input_collector)
 
-    app_spinner = Spinner(message="Generating your beauty haul")
-    app_spinner.start()
-    try:
-        routine = [product for product in generate_routine(user_responses)]
-    finally:
-        app_spinner.stop()
+    while True:
+        user_responses = collect_user_preferences(input_collector)
 
-    routine_display = RoutineDisplay(routine, user_responses)
+        app_spinner = Spinner(message="Generating your beauty haul")
+        app_spinner.start()
+        try:
+            routine = [product for product in generate_routine(user_responses)]
+        finally:
+            app_spinner.stop()
 
-    # Display output functions
-    routine_display.check_if_routine_empty()
-    if routine:
-        routine_display.display_title()
-        routine_display.display_routine()
+        routine_display = RoutineDisplay(routine, user_responses)
 
-    # Check if user is satisfied with recommended routine
-    if is_user_satisfied(input_collector):
-        routine_saver = SaveRoutine(routine)
-        routine_saver.save_routine()
-        print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
-    else:
-        print("Don't worry, lets start again!✨")
-        main()
+        # Display output functions
+        routine_display.check_if_routine_empty()
+        if routine:
+            routine_display.display_title()
+            routine_display.display_routine()
+
+        # Check if user is satisfied with recommended routine
+        if is_user_satisfied(input_collector):
+            routine_saver = SaveRoutine(routine)
+            routine_saver.save_routine()
+            print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
+            break
+        else:
+            print("Don't worry, lets start again!✨")
+
 
 
 if __name__ == "__main__":
