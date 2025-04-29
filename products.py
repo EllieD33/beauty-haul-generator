@@ -35,7 +35,7 @@ class Product:
     def __extract_first_sentence(self, text):
         temp_text = text
         replacements = {
-            "dr.": "dr_PLACEHOLDER",
+            "Dr.": "dr_PLACEHOLDER",
             "e.l.f.": "elf_PLACEHOLDER"
         }
 
