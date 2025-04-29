@@ -4,7 +4,7 @@ class Product:
         self.__brand = brand
         self.__name = name
         self.__price = price
-        self.__description = description.split(".", 1)[0] + "."
+        self.__description = self.__extract_first_sentence(description)
         self.__product_type = product_type
         self.__tag_list = tag_list
         self.__category = category
@@ -30,6 +30,24 @@ class Product:
 
     def get_relevance_score(self):
         return self.__relevance_score
+
+    # helper function to extract first sentence of product description.
+    def __extract_first_sentence(self, text):
+        temp_text = text
+        temp_text = temp_text.replace("dr.", "dr_PLACEHOLDER")
+        temp_text = temp_text.replace("e.l.f.", "elf_PLACEHOLDER")
+
+        parts = temp_text.split(".", 1)
+        if len(parts) > 1:
+            first_sentence = parts[0] + "."
+
+        else:
+            first_sentence = text
+
+        first_sentence = first_sentence.replace("dr_PLACEHOLDER", "dr.")
+        first_sentence = first_sentence.replace("elf_PLACEHOLDER", "e.l.f.")
+
+        return first_sentence
 
     def display_info(self):
         print(f"🧴 Product: {self.__name} by {self.__brand}")
