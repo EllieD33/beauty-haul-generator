@@ -1,3 +1,6 @@
+import re
+
+
 class Product:
     def __init__(self, product_id, brand, name, price, description, product_type, tag_list, category, product_colours):
         self.__id = product_id
@@ -31,9 +34,11 @@ class Product:
     def get_relevance_score(self):
         return self.__relevance_score
 
-    # helper function to extract first sentence of product description.
+    # helper function to extract first sentence of product description and clean whitespace/line breaks.
     def __extract_first_sentence(self, text):
-        temp_text = text
+        clean_text = re.sub(r"\s+", " ", text).strip()
+
+        temp_text = clean_text
         replacements = {
             "Dr.": "dr_PLACEHOLDER",
             "e.l.f.": "elf_PLACEHOLDER"
@@ -43,7 +48,7 @@ class Product:
             temp_text = temp_text.replace(original, placeholder)
 
         parts = temp_text.split(".", 1)
-        first_sentence = parts[0] + "." if len(parts) > 1 else text
+        first_sentence = parts[0] + "." if len(parts) > 1 else clean_text
 
         for original, placeholder in replacements.items():
             first_sentence = first_sentence.replace(placeholder, original)
