@@ -35,7 +35,8 @@ class Product:
         return self.__relevance_score
 
     # helper function to extract first sentence of product description and clean whitespace/line breaks.
-    def __extract_first_sentence(self, text):
+    @staticmethod
+    def __extract_first_sentence(text):
         clean_text = re.sub(r"\s+", " ", text).strip()
 
         temp_text = clean_text
