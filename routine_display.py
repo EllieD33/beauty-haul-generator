@@ -1,11 +1,9 @@
 # Classes related to displaying the routine and saving the data
 
 from db_utils import save_routine
-from products import Product
-from routine_api import get_skin_type_products
 
 
-# equals sign decorator to surround the display title
+# equals sign decorator to surround the display title in the terminal
 def equal_sign_decorator(func):
     def inner(*args, **kwargs):
         print("\n")
@@ -16,7 +14,7 @@ def equal_sign_decorator(func):
 
     return inner
 
-
+# class for displaying the routine to the terminal
 class RoutineDisplay:
     def __init__(self, routine, responses):
         self.routine = routine
@@ -29,33 +27,22 @@ class RoutineDisplay:
                 f"\n\nOops, we couldn't find any products that matched your preferences! Maybe we can alter something and try again? 🔄")
             return
 
+    # if a routine is present, methods to display the title and display the routine from the API
     @staticmethod
     @equal_sign_decorator
     def display_title():
         print("✨Here is your personalised beauty routine!✨")
 
     def display_routine(self):
-        # loop through the products in the routine dictionary / list and print each
-
         print(f"Based on your preferences of {self.responses}, this is what we have chosen: ")
         for product in self.routine:
             product.display_info()
-            # print(f"Compatibility score: {score}\n")
-            # print(f"Category: {product['category']}")
-            # print(f"Name: {product['name']}")
-            # print(f"Price: {product['price']}")
-            # print(f"Match score for your skin type: {score}")
 
-
-class UserHappiness:
-    @staticmethod
-    def is_satisfied(response):
-        return response.strip() == "1"
-
-
+# class to save the routine to a CSV file
 class SaveRoutine:
     def __init__(self, routine):
         self.routine = routine
 
+    # method to call the save_routine function from db_utils
     def save_routine(self):
         save_routine(self.routine, filename="data/user_routines.csv")
