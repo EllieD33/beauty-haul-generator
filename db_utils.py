@@ -3,7 +3,6 @@ import os
 import csv
 
 def save_routine(routine, filename="data/user_routines.csv"):
-    headers = ["Brand", "Product", "Price", "Description"]
     headers = ["Brand", "Product", "Price", "Description", "Score"]
     # create a list of dictionaries for the routine
     routine_dict = []
