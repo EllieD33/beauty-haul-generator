@@ -1,6 +1,8 @@
 # File containing utility functions for accessing database.
 import os
 import csv
+import os.path
+
 
 def save_routine(routine, filename="data/user_routines.csv"):
     headers = ["Brand", "Product", "Price", "Description", "Score"]
