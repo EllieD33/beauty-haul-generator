@@ -58,7 +58,8 @@ class Product:
 
     def display_info(self):
         print(f"🧴 Product: {self.__name} by {self.__brand}")
-        print(f"💰 Price: {self.__price}")
+        price = float(self.__price)
+        print(f"💰 Price: £{price:.2f}")
         print(f"📂 Type: {self.__product_type}")
         print(f"📝 Description: {self.__description[:150] + "..." if len(self.__description) > 150 else self.__description}\n")
 
