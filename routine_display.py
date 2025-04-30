@@ -1,6 +1,6 @@
+# Classes related to displaying the routine and saving the data
+
 from db_utils import save_routine
-from products import Product
-from routine_api import get_skin_type_products
 
 
 # equals sign decorator to surround the display title in the terminal
@@ -37,14 +37,6 @@ class RoutineDisplay:
         print(f"Based on your preferences of {self.responses}, this is what we have chosen: ")
         for product in self.routine:
             product.display_info()
-
-
-# class to check whether user is happy with the routine
-class UserHappiness:
-    @staticmethod
-    def is_satisfied(response):
-        return response.strip() == "1"
-
 
 # class to save the routine to a CSV file
 class SaveRoutine:
