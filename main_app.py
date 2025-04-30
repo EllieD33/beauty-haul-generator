@@ -6,7 +6,6 @@ from user_input import UserInputCollector, InputValidator
 from routine_api import get_skin_type_products
 from user_preferences import UserPreferences
 
-
 def print_welcome_screen():
     print("\n✨💄 Welcome to the beauty haul generator 💄✨\n")
     print("📌 Here's how this works...\n")
