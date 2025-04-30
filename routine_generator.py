@@ -25,7 +25,14 @@ class RoutineGenerator:
             # Add the filtered products to the refined list
             refined_product_list.extend(filtered_products)
 
-        # Ensure no duplicates
-        refined_product_list = list(set(refined_product_list))
+        # Dictionary of highest scoring products for each product type. Return as list.
+        products_by_type = {}
+        for product in refined_product_list:
+            product_type = product.get_product_type()
+            if product_type not in products_by_type or \
+               product.get_relevance_score() > products_by_type[product_type].get_relevance_score():
+                products_by_type[product_type] = product
 
-        return refined_product_list
+        return list(products_by_type.values())
+
+
