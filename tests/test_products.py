@@ -9,7 +9,7 @@ class TestProducts(unittest.TestCase):
             brand="Test Brand",
             name="Test Product",
             price="20.99",
-            description="This is a test product",
+            description="This is a test product. The first test product.",
             tag_list=["Vegan"],
             product_type="Test type",
             category="Test category",
@@ -31,10 +31,10 @@ class TestProducts(unittest.TestCase):
 
         self.product3 = Product(
             product_id="333",
-            brand="Test Another Brand Again",
+            brand="Test Another Brand Again. This time it's e.l.f.",
             name="Test Another Product Again",
             price="10.99",
-            description="This is a third test product for you",
+            description="You'll like this e.l.f. brand.",
             tag_list=["Oil free", "Alcohol free", "Natural", "Hypoallergenic", "Silicone free", "Vegan"],
             product_type="Test type",
             category="Test category",
@@ -53,11 +53,33 @@ class TestProducts(unittest.TestCase):
             product_colours=[{"hex_value": "#E1BFC9", "colour_name": "this is a third test colour"}]
         )
 
-    # Test the get_name() method
-    def test_get_name(self):
-        self.assertEqual(self.product.get_name(), "Test Product")
+    # Test the getter methods
+    def test_get_product_id(self):
+        self.assertEqual(self.product.get_product_id(), "111")
 
-    # Test check_suitable_for_skin_type method for oily skin
+    def test_get_product_type(self):
+        self.assertEqual(self.product2.get_product_type(), "Test type")
+
+    def test_get_price(self):
+        self.assertEqual(self.product3.get_price(), "10.99")
+
+
+    # Testing helper method _extract_first_sentence
+    def test_extract_first_sentence(self):
+        # Testing just first sentence pulled
+        description_product = getattr(self.product, "_Product__description")
+        self.assertEqual(description_product, "This is a test product.")
+
+        # Testing full description extracted if no full stop
+        description_product2 = getattr(self.product2, "_Product__description")
+        self.assertEqual(description_product2, "This is another test product for you")
+
+        # Testing abbreviation does not affect sentence extraction.
+        description_product3 = getattr(self.product3, "_Product__description")
+        self.assertEqual(description_product3, "You'll like this e.l.f. brand.")
+
+
+    # Test get_skin_compatibility()
     def test_get_skin_compatibility(self):
         self.assertEqual(self.product.get_skin_compatibility("oily"), 0) # Testing no tags met
         self.assertEqual(self.product2.get_skin_compatibility("oily"), 2) # Testing some tags met
@@ -67,6 +89,8 @@ class TestProducts(unittest.TestCase):
         self.assertEqual(self.product.get_skin_compatibility("DRY"), 1)  # Testing capitals
         self.assertEqual(self.product.get_skin_compatibility("   dry   "), 1)  # Testing whitespace
 
+
+    # Test get_skin_recommendations()
     def test_get_skin_recommendations(self):
         prod_list = [self.product, self.product2, self.product3, self.product4]
         recommendations = Product.get_skin_recommendations(prod_list, "sensitive")
