@@ -46,7 +46,7 @@ class TestProducts(unittest.TestCase):
             brand="Test Another Brand Again 4",
             name="Test Another Product Again 4",
             price="10.99",
-            description="This is a 4th test product for you",
+            description="  This is a 4th   test product for you  \n Enjoy.",
             tag_list=[],
             product_type="Test type",
             category="Test category",
@@ -77,6 +77,10 @@ class TestProducts(unittest.TestCase):
         # Testing abbreviation does not affect sentence extraction.
         description_product3 = getattr(self.product3, "_Product__description")
         self.assertEqual(description_product3, "You'll like this e.l.f. brand.")
+
+        # Testing whitespace and line break
+        description_product4 = getattr(self.product4, "_Product__description")
+        self.assertEqual(description_product4, "This is a 4th test product for you Enjoy.")
 
 
     # Test get_skin_compatibility()
