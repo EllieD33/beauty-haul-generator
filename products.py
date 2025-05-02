@@ -55,7 +55,10 @@ class Product:
         return first_sentence
 
     def display_info(self):
-        print(f"🧴 Product: {self.__name} by {self.__brand}")
+        if self.__brand:
+            print(f"🧴 Product: {self.__name} by {self.__brand}")
+        else:
+            print(f"🧴 Product: {self.__name}")
         price = float(self.__price)
         print(f"💰 Price: £{price:.2f}")
         print(f"📂 Type: {self.__product_type}")
