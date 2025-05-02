@@ -52,5 +52,47 @@ class TestAdvancedFilter(unittest.TestCase):
         # Only products with matching types are returned
         self.assertEqual(result, [product1, product3])
 
+    def test_apply_budget(self):
+        # Mock the products and returned values
+        product1 = MagicMock()
+        product1.get_price.return_value = "10.00"
+
+        product2 = MagicMock()
+        product2.get_price.return_value = "25.00"
+
+        product3 = MagicMock()
+        product3.get_price.return_value = "35.00"
+
+        product4 = MagicMock()
+        product4.get_price.return_value = "50.00"
+
+        products = [product1, product2, product3, product4]
+
+        # Test with budget "£" (20.00)
+        budget_key = "£"
+        filtered_products = AdvancedFilter.apply_budget(budget_key, products)
+        self.assertEqual(filtered_products, [product1])
+
+        # Test with budget "££" (30.00)
+        budget_key = "££"
+        filtered_products = AdvancedFilter.apply_budget(budget_key, products)
+        self.assertEqual(filtered_products, [product1, product2])
+
+        # Test with budget "£££" (40.00)
+        budget_key = "£££"
+        filtered_products = AdvancedFilter.apply_budget(budget_key, products)
+        self.assertEqual(filtered_products, [product1, product2, product3])
+
+        # Test with budget "££££" (infinite budget)
+        budget_key = "££££"
+        filtered_products = AdvancedFilter.apply_budget(budget_key, products)
+        self.assertEqual(filtered_products, [product1, product2, product3, product4])
+
+        # Test with an invalid budget key (fallback to infinite budget)
+        budget_key = "invalid"
+        filtered_products = AdvancedFilter.apply_budget(budget_key, products)
+        self.assertEqual(filtered_products, [product1, product2, product3, product4])
+
+
 if __name__ == "__main__":
     unittest.main()
