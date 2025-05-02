@@ -107,5 +107,3 @@ def get_natural_products(product_type):
     ]
 
     return get_products_by_tags(product_type, natural_tags)
-
-# print(get_eco_products("eyeliner"))
