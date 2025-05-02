@@ -3,38 +3,6 @@ from products import Product
 
 ENDPOINT = "http://makeup-api.herokuapp.com/api/v1/products.json"
 
-
-def get_all_products():
-    response = requests.get(url=ENDPOINT)
-    response.raise_for_status()
-    data = response.json()
-    return Product.convert_to_products(data)  # returns list of product objects
-
-
-def get_products_by_brand(brand):
-    brand_params = {"brand": brand}
-    response = requests.get(url=ENDPOINT, params=brand_params)
-    response.raise_for_status()
-    data = response.json()
-    return Product.convert_to_products(data)
-
-
-def get_products_by_type(prod_type):
-    type_params = {"product_type": prod_type}
-    response = requests.get(url=ENDPOINT, params=type_params)
-    response.raise_for_status()
-    data = response.json()
-    return Product.convert_to_products(data)
-
-
-def get_products_by_price(less_than):
-    price_params = {"price_less_than": less_than}
-    response = requests.get(url=ENDPOINT, params=price_params)
-    response.raise_for_status()
-    data = response.json()
-    return Product.convert_to_products(data)
-
-
 """
 
 When sending multiple tags in the API call, it only pulls the products which contain all of the tags sent in the call. 
