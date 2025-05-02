@@ -41,32 +41,30 @@ class AdvancedFilter:
         for rank in priorities:
             if rank == "1":
                 api_filtered_products = priority_function_map[rank](budget, all_filtered_products)
+
             else:
                 api_filtered_products = priority_function_map[rank](product_type)
 
-            # Filter the original products by product type
-            filtered_products_by_type = AdvancedFilter.filter_product_types(product_type, all_filtered_products)
-
             # Compare the filtered products by type with the API results
-            acceptable_products = AdvancedFilter.compare_products(api_filtered_products, filtered_products_by_type)
+            acceptable_products = AdvancedFilter.compare_products(api_filtered_products, all_filtered_products)
 
             # If no products match, return the previously filtered results (we don't want to remove all products)
             if not acceptable_products:
-                return all_filtered_products
+                continue
 
             # Add score to relevance based on priority rank
             score_to_add = priority_score_map.get(rank, 0)
             for product in acceptable_products:
-                product.add_relevance_score(score_to_add)
+                product.set_relevance_score(score_to_add)
 
             # Update the list of products for the next priority
             all_filtered_products = acceptable_products
 
             if len(all_filtered_products) <= 1:
-                return all_filtered_products
+                break
 
-            # Return the final list of filtered products
-            return all_filtered_products
+        # Return the final list of filtered products
+        return all_filtered_products
 
     @staticmethod
     def compare_products(api_products, provided_products):
