@@ -30,25 +30,25 @@ class AdvancedFilter:
         """
         Filters and scores products based on multiple user-defined priorities.
         """
-        try:
-            priority_function_map = {
-                "1": lambda b, p: AdvancedFilter.apply_budget(b, p),
-                "2": get_vegan_products,
-                "3": get_eco_products,
-                "4": get_natural_products
-            }
+        priority_function_map = {
+            "1": lambda b, p: AdvancedFilter.apply_budget(b, p),
+            "2": get_vegan_products,
+            "3": get_eco_products,
+            "4": get_natural_products
+        }
 
-            # Points to be added to product relevance score: higher priority gives higher points
-            priority_score_map = {
-                "1": 4,
-                "2": 3,
-                "3": 2,
-                "4": 1
-            }
+        # Points to be added to product relevance score: higher priority gives higher points
+        priority_score_map = {
+            "1": 4,
+            "2": 3,
+            "3": 2,
+            "4": 1
+        }
 
-            all_filtered_products = products
+        all_filtered_products = products
 
-            for rank in priorities:
+        for rank in priorities:
+            try:
                 if rank == "1":
                     api_filtered_products = priority_function_map[rank](budget, all_filtered_products)
 
@@ -63,7 +63,7 @@ class AdvancedFilter:
 
                 # If no products match, return the previously filtered results (we don't want to remove all products)
                 if not acceptable_products:
-                    return all_filtered_products
+                    return all_filtered_products # keep prior results if no matches
 
                 # Add score to relevance based on priority rank
                 score_to_add = priority_score_map.get(rank, 0)
@@ -74,14 +74,13 @@ class AdvancedFilter:
                 all_filtered_products = acceptable_products
 
                 if len(all_filtered_products) <= 1:
-                    return all_filtered_products
+                    break
 
-            # Return the final list of filtered products
-            return all_filtered_products
+            except (KeyError, TypeError, AttributeError) as e:
+                print(f"\n⚠️ Priority '{rank}' caused an error: {type(e).__name__} - {e}")
+                continue # skip this priority but don't filtering
 
-        except Exception as e:
-            print(f"⚠️ Error in filter_by_relevance: {e}")
-            return products # return unfiltered list
+        return all_filtered_products
 
     @staticmethod
     def compare_products(api_products, provided_products):
