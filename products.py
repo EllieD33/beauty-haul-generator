@@ -2,7 +2,7 @@ import re
 
 
 class Product:
-    def __init__(self, product_id, brand, name, price, description, product_type, tag_list, category, product_colours):
+    def __init__(self, product_id, brand, name, price, description, product_type, tag_list):
         self.__id = product_id
         self.__brand = brand
         self.__name = name
@@ -10,8 +10,6 @@ class Product:
         self.__description = self._extract_first_sentence(description)
         self.__product_type = product_type
         self.__tag_list = tag_list
-        self.__category = category
-        self.__product_colours = product_colours
         self.__relevance_score = 0
 
     # Setters
@@ -115,8 +113,6 @@ class Product:
             description = item.get("description")
             product_type = item.get("product_type")
             tag_list = item.get("tag_list", [])
-            category = item.get("category")
-            product_colours = item.get("product_colors", [])
 
             product_object = Product(
                 product_id=product_id,
@@ -126,8 +122,6 @@ class Product:
                 description=description,
                 product_type=product_type,
                 tag_list=tag_list,
-                category=category,
-                product_colours=product_colours
             )
 
             product_object_list.append(product_object)
