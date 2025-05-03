@@ -1,5 +1,5 @@
 # Classes related to gathering and processing user inputs.
-from user_preferences import UserPreferences
+from models.user_preferences import UserPreferences
 
 
 class UserInputCollector:

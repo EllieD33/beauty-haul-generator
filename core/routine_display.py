@@ -1,6 +1,6 @@
 # Classes related to displaying the routine and saving the data
 
-from db_utils import save_routine
+from data.db_utils import save_routine
 
 
 # equals sign decorator to surround the display title in the terminal

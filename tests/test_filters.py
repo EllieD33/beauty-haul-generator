@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 
-from filters import AdvancedFilter
+from core.filters import AdvancedFilter
 
 
 class TestAdvancedFilter(unittest.TestCase):

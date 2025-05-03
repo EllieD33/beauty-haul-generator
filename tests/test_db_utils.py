@@ -2,7 +2,7 @@ import unittest
 import csv
 import os
 
-from db_utils import save_routine
+from data.db_utils import save_routine
 
 class MockProduct:
     def __init__(self, data):

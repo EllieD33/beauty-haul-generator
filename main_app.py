@@ -1,7 +1,7 @@
-from routine_display import RoutineDisplay, SaveRoutine
-from routine_generator import RoutineGenerator
+from core.routine_display import RoutineDisplay, SaveRoutine
+from core.routine_generator import RoutineGenerator
 from ui.loading_spinner import Spinner
-from user_interactions import UserInputCollector, UserFeedbackCollector, UserPreferenceCollector
+from core.user_interactions import UserInputCollector, UserFeedbackCollector, UserPreferenceCollector
 
 
 def main():
@@ -15,7 +15,6 @@ def main():
         preference_collector = UserPreferenceCollector(input_collector)
 
         if not feedback_collector.get_user_consent():
-            print("No Worries! Exiting the Beauty Haul Generator. 💅")
             return
 
         while True:
@@ -23,13 +22,13 @@ def main():
             user_responses = preference_collector.collect_all_preferences()
 
             # Wraps API calls in the spinner UI - spinner indicates loading state
-            app_spinner = Spinner(message="Generating your beauty haul...")
+            app_spinner = Spinner(message="Generating your beauty haul, please wait...")
             app_spinner.start()
             try:
                 routine_generator = RoutineGenerator(user_responses)
                 routine = routine_generator.generate_routine()
             except (ValueError, ConnectionError) as e:
-                print(f"\n⚠️ A known error occurred while generating your routine: {e}")
+                print(f"\n⚠️ An unknown error occurred while generating your routine: {e}")
                 routine = []
             except Exception as e:
                 print(f"\n⚠️ An unexpected error occurred while generating your routine: {e}")
@@ -54,7 +53,7 @@ def main():
                 print("No problem, let's start again and find something better!💫\n")
 
     except KeyboardInterrupt:(
-    print("\nExiting gracefully. Take care and stay fabulous!"))
+    print("\n\n ❌ Exiting gracefully. Take care and stay fabulous! ✨"))
 
 if __name__ == "__main__":
     main()
