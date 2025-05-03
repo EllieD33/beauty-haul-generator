@@ -1,6 +1,7 @@
 import unittest
 from products import Product
 
+
 class TestProducts(unittest.TestCase):
     def setUp(self):
 
@@ -12,8 +13,6 @@ class TestProducts(unittest.TestCase):
             description="This is a test product. The first test product.",
             tag_list=["Vegan"],
             product_type="Test type",
-            category="Test category",
-            product_colours=[{"hex_value": "#E1BFC0", "colour_name": "this is a test colour"}],
         )
 
         # Additional products for recommendation tests
@@ -25,8 +24,6 @@ class TestProducts(unittest.TestCase):
             description="This is another test product for you",
             tag_list=["Oil free", "Alcohol free", "Natural"],
             product_type="Test type",
-            category="Test category",
-            product_colours=[{"hex_value": "#E1BFC6", "colour_name": "this is another test colour"}]
         )
 
         self.product3 = Product(
@@ -37,8 +34,6 @@ class TestProducts(unittest.TestCase):
             description="You'll like this e.l.f. brand.",
             tag_list=["Oil free", "Alcohol free", "Natural", "Hypoallergenic", "Silicone free", "Vegan"],
             product_type="Test type",
-            category="Test category",
-            product_colours=[{"hex_value": "#E1BFC9", "colour_name": "this is a third test colour"}]
         )
 
         self.product4 = Product(
@@ -49,8 +44,6 @@ class TestProducts(unittest.TestCase):
             description="  This is a 4th   test product for you  \n Enjoy.",
             tag_list=[],
             product_type="Test type",
-            category="Test category",
-            product_colours=[{"hex_value": "#E1BFC9", "colour_name": "this is a third test colour"}]
         )
 
     # Test the getter methods
@@ -62,7 +55,6 @@ class TestProducts(unittest.TestCase):
 
     def test_get_price(self):
         self.assertEqual(self.product3.get_price(), "10.99")
-
 
     # Testing helper method _extract_first_sentence
     def test_extract_first_sentence(self):
@@ -82,29 +74,27 @@ class TestProducts(unittest.TestCase):
         description_product4 = getattr(self.product4, "_Product__description")
         self.assertEqual(description_product4, "This is a 4th test product for you Enjoy.")
 
-
     # Test get_skin_compatibility()
     def test_get_skin_compatibility(self):
-        self.assertEqual(self.product.get_skin_compatibility("oily"), 0) # Testing no tags met
-        self.assertEqual(self.product2.get_skin_compatibility("oily"), 2) # Testing some tags met
-        self.assertEqual(self.product3.get_skin_compatibility("oily"), 4) # Testing all tags met
-        self.assertEqual(self.product4.get_skin_compatibility("oily"), 0) # Testing empty list
+        self.assertEqual(self.product.get_skin_compatibility("oily"), 0)  # Testing no tags met
+        self.assertEqual(self.product2.get_skin_compatibility("oily"), 2)  # Testing some tags met
+        self.assertEqual(self.product3.get_skin_compatibility("oily"), 4)  # Testing all tags met
+        self.assertEqual(self.product4.get_skin_compatibility("oily"), 0)  # Testing empty list
 
         self.assertEqual(self.product.get_skin_compatibility("DRY"), 1)  # Testing capitals
         self.assertEqual(self.product.get_skin_compatibility("   dry   "), 1)  # Testing whitespace
-
 
     # Test get_skin_recommendations()
     def test_get_skin_recommendations(self):
         prod_list = [self.product, self.product2, self.product3, self.product4]
         recommendations = Product.get_skin_recommendations(prod_list, "sensitive")
 
-        self.assertEqual(len(recommendations), 2) # Testing correct number of recs returned.
+        self.assertEqual(len(recommendations), 2)  # Testing correct number of recs returned.
 
     def test_get_skin_recommendations_empty(self):
         prod_list = []
         recommendations = Product.get_skin_recommendations(prod_list, "sensitive")
-        self.assertEqual(len(recommendations), 0) # Testing if 0 recommendations when given empty list
+        self.assertEqual(len(recommendations), 0)  # Testing if 0 recommendations when given empty list
 
     def test_get_skin_recommendations_no_match(self):
         prod_list = [self.product, self.product4]
