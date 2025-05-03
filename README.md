@@ -41,7 +41,7 @@ tailors a glowing routine just for you.
 ---
 ## Project Structure ##
 
-sirenc0de/CFG-ProjectGroup5/
+CFG-ProjectGroup5/
 │
 ├── main.py                        # 🚀 Entry point of the application
 │
