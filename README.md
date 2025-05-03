@@ -39,7 +39,7 @@ tailors a glowing routine just for you.
 `pip install -r requirements.txt`
 3. Run the Flask application
 ---
-## Project Structure
+## Project Structure ##
 
 sirenc0de/CFG-ProjectGroup5/
 │
