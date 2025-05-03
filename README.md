@@ -41,7 +41,7 @@ git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git
 ```sh
 pip install -r requirements.txt
 ```
-3. Run the application from `main_app.py`
+3. Run the application from `main.py`
 
 ---
 ## Project Structure ##
@@ -50,19 +50,35 @@ pip install -r requirements.txt
 
     main.py – 🚀 Entry point of the application
 
-    products.py – 🧴 Defines the Product class and scoring logic
+    README.md – 📝 Project documentation
+    
+    requirements.txt – 📦 List of required packages
 
-    filters.py – ⚙️ Applies filtering based on user budget, type, ethics
+📂 api/
 
-    routine_generator.py – 🔄 Generates a personalised beauty routine
+    routine_api.py – 🌱 Interfaces for skin-type, vegan, eco, and natural product filtering
+
+📂 core/
+
+    filters.py – ⚙️ Applies filtering based on user budget, product type, and ethics
 
     routine_display.py – 🖥️ Displays and saves the final routine
 
-    routine_api.py – 🌱 Interfaces for vegan, eco, and natural product filtering
+    routine_generator.py – 🔄 Generates a personalised beauty routine
+
+    user_interactions.py – 🎯 Handles all user inputs and preference collection
+
+📂 data/
+
+    user_routines.csv – 📊 CSV file generated from user sessions
 
     db_utils.py – 💾 Utility for saving routines to CSV
 
-    user_interactions.py – 🎯 Handles all user inputs and preference collection
+📂 models/
+
+    products.py – 🧴 Defines the Product class and scoring logic
+
+    user_preferences.py – ⭐ Defines the User_Preferences class 
 
 📂 ui/
 
@@ -71,14 +87,6 @@ pip install -r requirements.txt
 📂 tests/
 
     test_products.py – ✅ Tests for product filtering logic
-
-📂 data/
-
-    user_routines.csv – 📊 CSV file generated from user sessions
-
-    requirements.txt – 📦 List of required packages
-
-    README.md – 📝 Project documentation
 
 ---
 
