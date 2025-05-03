@@ -7,7 +7,7 @@ class Product:
         self.__brand = brand
         self.__name = name
         self.__price = price
-        self.__description = self.__extract_first_sentence(description)
+        self.__description = self._extract_first_sentence(description)
         self.__product_type = product_type
         self.__tag_list = tag_list
         self.__category = category
@@ -22,8 +22,6 @@ class Product:
     def get_product_id(self):
         return self.__id
 
-    def get_name(self):
-        return self.__name
 
     def get_product_type(self):
         return self.__product_type
@@ -36,7 +34,7 @@ class Product:
 
     # helper function to extract first sentence of product description and clean whitespace/line breaks.
     @staticmethod
-    def __extract_first_sentence(text):
+    def _extract_first_sentence(text):
         clean_text = re.sub(r"\s+", " ", text).strip()
 
         temp_text = clean_text
@@ -57,13 +55,16 @@ class Product:
         return first_sentence
 
     def display_info(self):
-        print(f"🧴 Product: {self.__name} by {self.__brand}")
+        if self.__brand:
+            print(f"🧴 Product: {self.__name} by {self.__brand}")
+        else:
+            print(f"🧴 Product: {self.__name}")
         price = float(self.__price)
         print(f"💰 Price: £{price:.2f}")
         print(f"📂 Type: {self.__product_type}")
         print(f"📝 Description: {self.__description[:150] + "..." if len(self.__description) > 150 else self.__description}\n")
 
-    # method gets called in static method for each product in list.
+    # method gets called in get_skin_recommendations() for each product in list.
     def get_skin_compatibility(self, skin_type):
         tags = [tag.lower().strip() for tag in self.__tag_list]
 
@@ -100,6 +101,7 @@ class Product:
         scored_products.sort(key=lambda p: p.get_relevance_score(), reverse=True)
         return scored_products
 
+    # this method converts API data to list of product objects
     @staticmethod
     def convert_to_products(data):
 
