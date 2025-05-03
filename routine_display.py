@@ -40,9 +40,18 @@ class RoutineDisplay:
 
 # class to save the routine to a CSV file
 class SaveRoutine:
-    def __init__(self, routine):
+    def __init__(self, routine, filename="data/user_routines.csv"):
         self.routine = routine
+        self.filename = filename
 
     # method to call the save_routine function from db_utils
     def save_routine(self):
-        save_routine(self.routine, filename="data/user_routines.csv")
+        try:
+            save_routine(self.routine, filename=self.filename)
+            print("\n✅ Your beauty routine has been successfully saved! You're glowing! ✨\n")
+        except Exception as e:
+            print("\n⚠️ Oops, something went wrong while saving your routine. Please try again!\n")
+            print(f"(Error: {e})")
+            # This function can be swapped for proper logging if the project was to get bigger.
+
+
