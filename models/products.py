@@ -25,7 +25,7 @@ class Product:
         return self.__product_type
 
     def get_price(self):
-        return self.__price
+            return self.__price
 
     def get_relevance_score(self):
         return self.__relevance_score
@@ -54,12 +54,15 @@ class Product:
 
     def display_info(self):
         if self.__brand:
-            print(f"🧴 Product: {self.__name} by {self.__brand}")
+            print(f"🧴 Product: {self.__name.capitalize()} by {self.__brand.capitalize()}")
         else:
-            print(f"🧴 Product: {self.__name}")
+            print(f"🧴 Product: {self.__name.capitalize()}")
         price = float(self.__price)
-        print(f"💰 Price: £{price:.2f}")
-        print(f"📂 Type: {self.__product_type}")
+        if price > 0:
+            print(f"💰 Price: £{price:.2f}")
+        else:
+            print("💰 Price: Unknown")
+        print(f"📂 Type: {self.__product_type.capitalize()}")
         print(f"📝 Description: {self.__description[:150] + "..." if len(self.__description) > 150 else self.__description}\n")
 
     # method gets called in get_skin_recommendations() for each product in list.
