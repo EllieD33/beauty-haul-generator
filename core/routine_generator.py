@@ -1,5 +1,5 @@
-from filters import AdvancedFilter
-from routine_api import get_skin_type_products
+from core.filters import AdvancedFilter
+from api.routine_api import get_skin_type_products
 
 
 class RoutineGenerator:

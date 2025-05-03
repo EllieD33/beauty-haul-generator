@@ -1,4 +1,4 @@
-from routine_api import get_vegan_products, get_natural_products, get_eco_products
+from api.routine_api import get_vegan_products, get_natural_products, get_eco_products
 
 
 class AdvancedFilter:

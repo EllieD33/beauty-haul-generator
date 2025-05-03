@@ -1,5 +1,5 @@
 import requests
-from products import Product
+from models.products import Product
 
 ENDPOINT = "http://makeup-api.herokuapp.com/api/v1/products.json"
 

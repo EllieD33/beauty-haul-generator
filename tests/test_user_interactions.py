@@ -1,6 +1,6 @@
 import unittest
 
-from user_interactions import InputValidator
+from core.user_interactions import InputValidator
 
 
 class TestInputValidator(unittest.TestCase):
