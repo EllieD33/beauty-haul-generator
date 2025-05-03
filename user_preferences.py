@@ -3,7 +3,6 @@ class UserPreferences:
         self.__skin_type = None
         self.__budget = None
         self.__product_types = None
-        self.__brand_preference = []
         self.__priorities = None
 
     # Setter methods
@@ -38,7 +37,6 @@ class UserPreferences:
             "skin_type": self.__skin_type,
             "budget": self.__budget,
             "product_types": self.__product_types,
-            "brand_preference": self.__brand_preference,
             "priorities": self.__priorities
         }
 
