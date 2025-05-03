@@ -7,7 +7,7 @@ tailors a glowing routine just for you.
 
 ---
 
-## Feautures
+## Features
 
 - **Interactive CLI** with step-by-step questions
 - **Custom routine generation** based:
@@ -18,6 +18,7 @@ tailors a glowing routine just for you.
 - **Advanced filtering** using a prioritisation algorithm
 - **Save your routine** locally for future use
 - **Fun, friendly UX** with emojis and spinner loading animation
+- Extensible structure for future integration of **user reviews**
 
 ---
 
@@ -34,6 +35,39 @@ tailors a glowing routine just for you.
 
 1. **Clone the repository** via **SSH**, run the following:
 `git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git`
-2. 
+2. Install dependencies:
+`pip install -r requirements.txt`
+3. Run the Flask application
+
+---
+
+## 💡How Reviews Influence Filtering (Planned Feature) ##
+
+In future versions, the system will:
+- Analyse product reviews for sentiment
+- Boost relevance scores for positive reviews aligned with a user's skin type
+- Penalise products with consistently negative feedback
+
+This would involve scraping or importing review data and performing text classification or sentiment analysis using tools like NLTK, spaCy, or TextBlob. 
+
+---
+
+## Project Structure
+
+
+
+## To Do📌
+
+- Submit project via PR
+- Update project logs
+- Prepare and finalise project presentation
+
+## 🔬Developers
+
+Ellen Daly,
+Ekum Jaswal,
+Tiffany Scott-Vaughan,
+Laura Wheaton,
+Lauren Blayney
 
 
