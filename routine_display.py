@@ -51,8 +51,7 @@ class SaveRoutine:
             print("\n✅ Your beauty routine has been successfully saved! You're glowing! ✨\n")
         except Exception as e:
             print("\n⚠️ Oops, something went wrong while saving your routine. Please try again!\n")
-            # Optionally, if you want to log the error details for developers:
-            # print(f"Debug info: {e}"
+            print(f"(Error: {e})")
             # This function can be swapped for proper logging if the project was to get bigger.
 
 
