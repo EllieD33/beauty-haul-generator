@@ -11,10 +11,10 @@ tailors a glowing routine just for you.
 
 - **Interactive CLI** with step-by-step questions
 - **Custom routine generation** based:
-- - Skin Type
-- - Budget
-- - Product interests
-- - Personal values (e.g., Vegan-friendly, Eco-conscious)
+  - Skin Type
+  - Budget
+  - Product interests
+  - Personal values (e.g., Vegan-friendly, Eco-conscious)
 - **Advanced filtering** using a prioritisation algorithm
 - **Save your routine** locally for future use
 - **Fun, friendly UX** with emojis and spinner loading animation
@@ -34,41 +34,57 @@ tailors a glowing routine just for you.
 ## Installation
 
 1. **Clone the repository** via **SSH**, run the following:
-`git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git`
-2. Install dependencies:
-`pip install -r requirements.txt`
-3. Run the Flask application
+```sh
+git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git
+```
+2. Install dependencies
+```sh
+pip install -r requirements.txt
+```
+3. Run the application from `main_app.py`
+
 ---
 ## Project Structure ##
 
-CFG-ProjectGroup5/
-│
-├── main.py                        # 🚀 Entry point of the application
-│
-├── products.py                     # 🧴 Defines the Product class and scoring logic
-├── filters.py             # ⚙️ Applies filtering based on user budget, type, ethics
-├── routine_generator.py           # 🔄 Generates a personalized beauty routine
-├── routine_display.py             # 🖥️ Displays and saves the final routine
-├── routine_api.py                 # 🌱 Interfaces for vegan, eco, and natural product filtering
-│
-├── db_utils.py                    # 💾 Utility for saving routines to CSV
-│
-├── ui/
-│   └── loading_spinner.py         # ⏳ CLI loading spinner to show progress
-│
-├── user_interactions.py           # 🎯 Handles all user inputs and preference collection
-│
-├── tests/                          # ✅ Unit tests (expandable for future use)
-│   └── test_products.py            #   - Tests for product filtering logic
-│
-├── data/                          # 📊 Stores saved user routines
-│   └── user_routines.csv          #   - CSV file generated from user sessions
-│
-├── requirements.txt               # 📦 List of required packages (if any)
-└── README.md                      # 📝 Project documentation
+📁 CFG-ProjectGroup5/
+
+    main.py – 🚀 Entry point of the application
+
+    products.py – 🧴 Defines the Product class and scoring logic
+
+    filters.py – ⚙️ Applies filtering based on user budget, type, ethics
+
+    routine_generator.py – 🔄 Generates a personalised beauty routine
+
+    routine_display.py – 🖥️ Displays and saves the final routine
+
+    routine_api.py – 🌱 Interfaces for vegan, eco, and natural product filtering
+
+    db_utils.py – 💾 Utility for saving routines to CSV
+
+    user_interactions.py – 🎯 Handles all user inputs and preference collection
+
+📂 ui/
+
+    loading_spinner.py – ⏳ CLI loading spinner to indicate activity during API calls
+
+📂 tests/
+
+    test_products.py – ✅ Tests for product filtering logic
+
+📂 data/
+
+    user_routines.csv – 📊 CSV file generated from user sessions
+
+    requirements.txt – 📦 List of required packages
+
+    README.md – 📝 Project documentation
+
 ---
 
-## 💡How Reviews Influence Filtering (Planned Feature) ##
+## Future Roadmap
+
+### 💡 How Reviews Influence Filtering (Planned Feature) ##
 
 In future versions, the system will:
 - Analyse product reviews for sentiment
@@ -76,6 +92,15 @@ In future versions, the system will:
 - Penalise products with consistently negative feedback
 
 This would involve scraping or importing review data and performing text classification or sentiment analysis using tools like NLTK, spaCy, or TextBlob. 
+
+
+### 💡 Other features on our roadmap include:
+- **User Login System:** Enable users to save/update preferences and revisit routines.
+- **API Data Caching:** Improve performance and reduce API calls.
+- **DB Caching:** Return past recommendations when identical inputs are detected.
+- **Refined Logic:** Allow product rejection and regeneration of specific items, not the whole haul.
+- **Enhanced UI/UX:** Potential GUI or web-based interface in future phases.
+- **Migration to a full database:** E.g., MySQL, PostgreSQL, or Firebase. Enabling more complex queries, user authentication, and integration with a future web frontend.
 
 ---
 
@@ -85,10 +110,10 @@ This would involve scraping or importing review data and performing text classif
 - Update project logs
 - Prepare and finalise project presentation
 - **Potentially**: 
-- - Integrate live product API (e.g., Makeup API)
-- - Add review scraping or upload functionality 
-- - Incorporate sentiment analysis for review-aware ranking
-- - Build a basic web interface (Flask or Streamlit)
+  - Integrate live product API (e.g., Makeup API)
+  - Add review scraping or upload functionality 
+  - Incorporate sentiment analysis for review-aware ranking
+  - Build a basic web interface (Flask or Streamlit)
 
 ## 🔬Developers
 
