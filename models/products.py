@@ -25,7 +25,7 @@ class Product:
         return self.__product_type
 
     def get_price(self):
-            return self.__price
+        return self.__price
 
     def get_relevance_score(self):
         return self.__relevance_score
