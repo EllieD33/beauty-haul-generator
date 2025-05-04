@@ -52,6 +52,14 @@ class UserFeedbackCollector:
         print("2️⃣ I'll work my magic to generate you a new haul.")
         print("3️⃣ You can work your own magic armed with your new haul!\n")
 
+    def get_user_name(self):
+        while True:
+            user_name = self.input_collector.ask_question("\nWhat's your first name? ").strip().lower()
+            if user_name:
+                return user_name
+            else:
+                print("⚠️ Name cannot be empty. Please enter your first name")
+
     def get_user_consent(self):
         while True:
             response = self.input_collector.ask_question("\n🪄 Shall we get started? Y / N").upper()
@@ -65,7 +73,7 @@ class UserFeedbackCollector:
                 print("⚠️ Please enter 'Y' or 'N'.")
 
     def is_user_satisfied(self):
-        question = "\nWhat do you think? Would you like to save this routine or should we change anything? \n1️⃣ Save routine \n2️⃣ Modify preferences\nPlease enter 1 or 2"
+        question = "\nWhat do you think? Would you like to save a copy of this routine or should we change anything? \n1️⃣ Save routine \n2️⃣ Modify preferences\nPlease enter 1 or 2"
         while True:
             response = self.input_collector.ask_question(question).strip()
             if InputValidator.validate_numeric_choices(response, 1, 2):

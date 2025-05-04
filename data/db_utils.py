@@ -53,3 +53,44 @@ def insert_new_user_routine(user_routine):
     finally:
         if db_connection:
             db_connection.close()
+
+def retrieve_routine():
+    db_name = "beauty_haul_generator"
+    db_connection = None
+    try:
+        db_connection = _connect_to_db(db_name)
+        cursor = db_connection.cursor()
+
+        query = """
+        SELECT routine_id, brand, product, price, product_desc, score
+        FROM routine_products
+        WHERE routine_id = (
+            SELECT MAX(id) FROM user_routines
+        )
+        """
+        cursor.execute(query)
+
+        results = cursor.fetchall()
+
+        routine_data = []
+        for row in results:
+            product_dict = {
+                "Brand": row[1],
+                "Product": row[2],
+                "Price": row[3],
+                "Description": row[4],
+                "Score": row[5]
+            }
+
+            routine_data.append(product_dict)
+
+        return routine_data
+
+    except Exception:
+        raise DbConnectionError("\n⚠️ Error: Failed to write routine to DB")
+    finally:
+        if db_connection:
+            db_connection.close()
+
+if __name__ == "__main__":
+    pass
