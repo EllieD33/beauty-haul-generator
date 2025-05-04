@@ -36,7 +36,7 @@ def insert_new_user_routine(user_routine):
         # Insert each product to the routine_products table
         for product in user_routine:
             product_dict = product.routine_to_dict()
-            query = """INSERT INTO routine_products (routine_id, brand, product, price, product_desc, score)\
+            query = """INSERT INTO routine_products (routine_id, brand, product, price, product_desc, score)
             VALUES (%s, %s, %s, %s, %s, %s)"""
             cursor.execute(query, (
                 routine_id,
