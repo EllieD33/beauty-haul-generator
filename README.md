@@ -31,7 +31,7 @@ tailors a glowing routine just for you.
 
 ---
 
-## Installation
+## Installation and Configuration
 
 1. **Clone the repository** via **SSH**, run the following:
 ```sh
@@ -41,18 +41,26 @@ git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git
 ```sh
 pip install -r requirements.txt
 ```
-3. Run the application from `main.py`
+3. Add your database password in `config.py`. Replace "PASSWORD" with your own DB password.
+4. Set up the database.
+   - Open your MySQL database management tool.
+   - Run the `create_db.sql` script to initialise the database.
+5. Run the application from `main.py`.
 
 ---
 ## Project Structure ##
 
 📁 CFG-ProjectGroup5/
 
+    config.py – 🛠️ Configuarations necessary to run the application
+    
     main.py – 🚀 Entry point of the application
 
     README.md – 📝 Project documentation
     
     requirements.txt – 📦 List of required packages
+
+    Group 5 Project Document.pdf - 📝 Additional project documentation
 
 📂 api/
 
@@ -70,9 +78,9 @@ pip install -r requirements.txt
 
 📂 data/
 
-    user_routines.csv – 📊 CSV file generated from user sessions
+    create_db.sql – 🗄️ Creation script for the database
 
-    db_utils.py – 💾 Utility for saving routines to CSV
+    db_utils.py – 💾 Utilities for interacting with the DB
 
 📂 models/
 
@@ -86,7 +94,13 @@ pip install -r requirements.txt
 
 📂 tests/
 
-    test_products.py – ✅ Tests for product filtering logic
+    test_db_utils.py – ✅ Tests for database utilities
+
+    test_filters.py – ✅ Tests for product filtering logic
+
+    test_products.py – ✅ Tests for product class methods
+
+    test_user_interactions.py – ✅ Tests for validating user inputs
 
 ---
 
