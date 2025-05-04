@@ -1,35 +1,55 @@
-# File containing utility functions for accessing database.
-import os
-import csv
+import mysql.connector
 
-def save_routine(routine, filename="data/user_routines.csv"):
-    headers = ["Brand", "Product", "Price", "Description", "Score"]
+from config import USER, PASSWORD, HOST
 
-    # Ensure the directory exists
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
 
-    # Create a list of dictionaries for the routine
-    routine_dict = [
-        {header: product_dict.get(header, "") for header in headers}
-        for product in routine
-        for product_dict in [product.routine_to_dict()]
-    ]
+class DbConnectionError(Exception):
+    pass
 
+
+# Establishes a connection to the given database
+def _connect_to_db(database_name):
+    connection = mysql.connector.connect(
+        host=HOST,
+        user=USER,
+        password=PASSWORD,
+        database=database_name
+    )
+    return connection
+
+
+# Saves a new user routine
+def insert_new_user_routine(user_routine):
+    db_name = "beauty_haul_generator"
+    db_connection = None
     try:
-        file_exists = os.path.exists(filename)
+        db_connection = _connect_to_db(db_name)
+        cursor = db_connection.cursor()
 
-        with open(filename, "a", newline="") as csv_file:
-            writer = csv.DictWriter(csv_file, fieldnames=headers)
+        # First add a new record to the user_routines table
+        query = """INSERT INTO user_routines (user_id) VALUES (1)"""  # We only have guest user currently, 1 is the guest id.
+        cursor.execute(query)
 
-            # If the file is new or empty, write headers
-            if not file_exists or os.path.getsize(filename) == 0:
-                writer.writeheader()
+        # Get the routine_id that was just created in DB
+        routine_id = cursor.lastrowid
 
-            writer.writerows(routine_dict)
+        # Insert each product to the routine_products table
+        for product in user_routine:
+            product_dict = product.routine_to_dict()
+            query = """INSERT INTO routine_products (routine_id, brand, product, price, product_desc, score)\
+            VALUES (%s, %s, %s, %s, %s, %s)"""
+            cursor.execute(query, (
+                routine_id,
+                product_dict['Brand'],
+                product_dict['Product'],
+                product_dict['Price'],
+                product_dict['Description'],
+                product_dict['Score']
+            ))
 
-        print("\nYour routine has been saved successfully! 💾")
-
-    except Exception as e:
-        print(f"⚠️ Error: An unexpected error occurred: {e}")
-
-
+        db_connection.commit()
+    except Exception:
+        raise DbConnectionError("\n⚠️ Error: Failed to write routine to DB")
+    finally:
+        if db_connection:
+            db_connection.close()

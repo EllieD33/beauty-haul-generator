@@ -47,7 +47,6 @@ def main():
             if feedback_collector.is_user_satisfied():
                 routine_saver = SaveRoutine(routine)
                 routine_saver.save_routine()
-                print("Thank you for using the beauty generator, you're glowing with your new routine! ✨")
                 break
             else:
                 print("No problem, let's start again and find something better!💫\n")

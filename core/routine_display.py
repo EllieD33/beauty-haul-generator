@@ -1,6 +1,6 @@
-# Classes related to displaying the routine and saving the data
+# Classes related to displaying the routine and saving the data to DB
 
-from data.db_utils import save_routine
+from data.db_utils import insert_new_user_routine
 
 
 # equals sign decorator to surround the display title in the terminal
@@ -38,16 +38,15 @@ class RoutineDisplay:
         for product in self.routine:
             product.display_info()
 
-# class to save the routine to a CSV file
+# class to save the routine to the DB
 class SaveRoutine:
-    def __init__(self, routine, filename="data/user_routines.csv"):
+    def __init__(self, routine):
         self.routine = routine
-        self.filename = filename
 
     # method to call the save_routine function from db_utils
     def save_routine(self):
         try:
-            save_routine(self.routine, filename=self.filename)
+            insert_new_user_routine(self.routine)
             print("\n✅ Your beauty routine has been successfully saved! You're glowing! ✨\n")
         except Exception as e:
             print("\n⚠️ Oops, something went wrong while saving your routine. Please try again!\n")
