@@ -38,7 +38,9 @@ def main():
                 app_spinner.stop()
 
             routine_display = RoutineDisplay(routine, user_responses)
-            routine_display.check_if_routine_empty()
+
+            if routine_display.check_if_routine_empty():
+                continue
 
             if routine:
                 routine_display.display_title()
