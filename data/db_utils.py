@@ -59,7 +59,9 @@ def insert_new_user_routine(user_routine):
         """)
         print("\n✨Here is your most recently saved routine: ")
         for row in cursor.fetchall():
-            print(row)
+            cleaned_row = [str(cell) for cell in row if cell is not None]
+            if cleaned_row:  # Skip empty rows
+                print(" | ".join(cleaned_row))
 
     except Exception:
         raise DbConnectionError("\n⚠️ Error: Failed to write routine to DB")
