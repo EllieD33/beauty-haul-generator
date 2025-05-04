@@ -19,6 +19,7 @@ def main():
 
         while True:
             # Get user's preferences
+            user_name = feedback_collector.get_user_name()
             user_responses = preference_collector.collect_all_preferences()
 
             # Wraps API calls in the spinner UI - spinner indicates loading state
@@ -45,7 +46,7 @@ def main():
 
             # Check if user is satisfied with recommended routine
             if feedback_collector.is_user_satisfied():
-                routine_saver = SaveRoutine(routine)
+                routine_saver = SaveRoutine(routine, user_name)
                 routine_saver.save_routine()
                 break
             else:

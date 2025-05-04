@@ -53,3 +53,4 @@ def insert_new_user_routine(user_routine):
     finally:
         if db_connection:
             db_connection.close()
+

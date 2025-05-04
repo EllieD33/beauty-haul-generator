@@ -1,5 +1,6 @@
 # Classes related to displaying the routine and saving the data to DB
-
+import os
+import csv
 from data.db_utils import insert_new_user_routine
 
 
@@ -40,17 +41,53 @@ class RoutineDisplay:
 
 # class to save the routine to the DB
 class SaveRoutine:
-    def __init__(self, routine):
+    def __init__(self, routine, user_filename):
         self.routine = routine
+        self.filename = user_filename
+        self.csv_directory = "user_routines"
+
+    def _dir_exists(self):
+        if not os.path.exists(self.csv_directory):
+            os.makedirs(self.csv_directory)
+
+    def save_to_csv(self):
+        headers = ["Brand", "Product", "Price", "Description", "Score"]
+        routine_dict = [
+            {header: product_dict.get(header, "") for header in headers}
+            for product in self.routine
+            for product_dict in [product.routine_to_dict()]
+        ]
+
+        try:
+            self._dir_exists()
+
+            file_name = f"{self.csv_directory}/{self.filename}.csv"
+            file_exists = os.path.exists(file_name)
+
+            with open(file_name, "a", newline="") as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=headers)
+
+                # If the file is new or empty, write headers
+                if not file_exists or os.path.getsize(file_name) == 0:
+                    writer.writeheader()
+
+                writer.writerows(routine_dict)
+
+        except Exception as e:
+            print(f"Unexpected error occurred: {e}")
+
+
 
     # method to call the save_routine function from db_utils
     def save_routine(self):
         try:
             insert_new_user_routine(self.routine)
-            print("\n✅ Your beauty routine has been successfully saved! You're glowing! ✨\n")
+            csv_saved = self.save_to_csv()
+            if csv_saved:
+                print("\n✅ Your beauty routine has been successfully saved! You're glowing! ✨\n")
+            else:
+                print("Saved to DB")
         except Exception as e:
             print("\n⚠️ Oops, something went wrong while saving your routine. Please try again!\n")
             print(f"(Error: {e})")
             # This function can be swapped for proper logging if the project was to get bigger.
-
-
