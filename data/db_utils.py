@@ -2,8 +2,10 @@ import mysql.connector
 
 from config import USER, PASSWORD, HOST
 
+
 class DbConnectionError(Exception):
     pass
+
 
 # Establishes a connection to the given database
 def _connect_to_db(database_name):
@@ -45,36 +47,28 @@ def insert_new_user_routine(user_routine):
                 product_dict['Score']
             ))
 
-            db_connection.commit()
-            print("Routine committed to DB")
+        db_connection.commit()
 
-    except Exception as e:
-        print(f"\n⚠️ Exception occurred: {e}")
+        # select most recently added routine id, and get associated products, print to terminal
+        cursor.execute("""
+        SELECT brand, product, price, product_desc
+        FROM routine_products 
+        WHERE routine_id = (
+            SELECT MAX(id) FROM user_routines
+            )
+        """)
+        print("\n✨Here is your most recently saved routine: ")
+        for row in cursor.fetchall():
+            # Prevent printing of null db values
+            cleaned_row = [str(cell) for cell in row if cell is not None]
+            if cleaned_row:  # Skip empty rows
+                print(" | ".join(cleaned_row))
+
+    except Exception:
         raise DbConnectionError("\n⚠️ Error: Failed to write routine to DB")
     finally:
         if db_connection:
             db_connection.close()
-
-# Testing
-class DummyProduct:
-    def __init__(self, brand, product, price, description, score):
-        self.brand = brand
-        self.product = product
-        self.price = price
-        self.description = description
-        self.score = score
-
-    def routine_to_dict(self):
-        return {
-           "Brand": self.brand,
-            "Product": self.product,
-            "Price": self.price,
-            "Description": self.description,
-            "Score": self.score
-        }
-
-
-
 
 def retrieve_routine():
     db_name = "beauty_haul_generator"
