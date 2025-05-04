@@ -41,7 +41,7 @@ git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git
 ```sh
 pip install -r requirements.txt
 ```
-3. Add you database password to `config.py`. Replace "PASSWORD" with your own DB password.
+3. Add your database password to `config.py`. Replace "PASSWORD" with your own DB password.
 4. Set up the database.
    - Open your MySQL database management tool.
    - Run the `create_db.sql` script to initialise the database.
