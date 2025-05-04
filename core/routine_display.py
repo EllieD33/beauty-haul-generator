@@ -26,7 +26,7 @@ class RoutineDisplay:
         if not self.routine:
             print(
                 f"\n\nOops, we couldn't find any products that matched your preferences! Maybe we can alter something and try again? 🔄")
-            return
+            return True
 
     # if a routine is present, methods to display the title and display the routine from the API
     @staticmethod
