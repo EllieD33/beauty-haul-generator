@@ -1,7 +1,7 @@
 # Classes related to displaying the routine and saving the data to DB
 import os
 import csv
-from data.db_utils import insert_new_user_routine
+from data.db_utils import insert_new_user_routine, retrieve_routine
 
 
 # equals sign decorator to surround the display title in the terminal
@@ -50,13 +50,10 @@ class SaveRoutine:
         if not os.path.exists(self.csv_directory):
             os.makedirs(self.csv_directory)
 
-    def save_to_csv(self):
+    def save_to_csv(self, data):
         headers = ["Brand", "Product", "Price", "Description", "Score"]
-        routine_dict = [
-            {header: product_dict.get(header, "") for header in headers}
-            for product in self.routine
-            for product_dict in [product.routine_to_dict()]
-        ]
+
+        routine_dict = data
 
         try:
             self._dir_exists()
@@ -73,6 +70,8 @@ class SaveRoutine:
 
                 writer.writerows(routine_dict)
 
+            return True
+
         except Exception as e:
             print(f"Unexpected error occurred: {e}")
 
@@ -82,7 +81,8 @@ class SaveRoutine:
     def save_routine(self):
         try:
             insert_new_user_routine(self.routine)
-            csv_saved = self.save_to_csv()
+            routine_data = retrieve_routine()
+            csv_saved = self.save_to_csv(data=routine_data)
             if csv_saved:
                 print("\n✅ Your beauty routine has been successfully saved! You're glowing! ✨\n")
             else:
