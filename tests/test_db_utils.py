@@ -1,8 +1,10 @@
 import unittest
 from unittest.mock import patch, MagicMock
+import csv
+import os
 
 from data.db_utils import insert_new_user_routine, DbConnectionError
-
+from core.routine_display import SaveRoutine
 
 class MockProduct:
     def __init__(self, brand, product, price, desc, score):
@@ -58,5 +60,40 @@ class TestInsertNewUserRoutine(unittest.TestCase):
             insert_new_user_routine([])
 
 
+class TestSavingToCSV(unittest.TestCase):
+    def setUp(self):
+        self.test_file = "test_db_to_csv"
+        self.fullpath = f"user_routines/{self.test_file}.csv"
+        self.test_data_dicts = [
+            {"Brand": "Fenty", "Product": "Foundation", "Price": "30", "Description": "Test description", "Score": 4},
+            {"Brand": "MAC", "Product": "Lipstick", "Price": "19.99", "Description": "MAC Ruby Woo Lipstick",
+             "Score": 8}]
+
+
+    def test_save_to_csv(self):
+        routine_saver = SaveRoutine(self.test_data_dicts, self.test_file)
+        routine_saver.save_to_csv(self.test_data_dicts)
+        try:
+            with open(self.fullpath, "r") as csv_file:
+                reader = csv.DictReader(csv_file)
+                rows = list(reader)
+                for row in rows:
+                    print(row)
+            self.assertEqual(len(rows), 2)
+            self.assertEqual(rows[0]["Product"], "Foundation")
+            self.assertEqual(rows[1]["Price"], "19.99")
+        except FileNotFoundError:
+            print("❌ Could not open the file, file doesn't exist")
+
+    def tearDown(self):
+        if os.path.exists(self.fullpath):
+            os.remove(self.fullpath)
+            print("Test file removed ✅")
+        else:
+            print("No test file found, no removal needed")
+
+
+
 if __name__ == '__main__':
     unittest.main()
+
