@@ -2,10 +2,8 @@ import mysql.connector
 
 from config import USER, PASSWORD, HOST
 
-
 class DbConnectionError(Exception):
     pass
-
 
 # Establishes a connection to the given database
 def _connect_to_db(database_name):
@@ -47,12 +45,36 @@ def insert_new_user_routine(user_routine):
                 product_dict['Score']
             ))
 
-        db_connection.commit()
-    except Exception:
+            db_connection.commit()
+            print("Routine committed to DB")
+
+    except Exception as e:
+        print(f"\n⚠️ Exception occurred: {e}")
         raise DbConnectionError("\n⚠️ Error: Failed to write routine to DB")
     finally:
         if db_connection:
             db_connection.close()
+
+# Testing
+class DummyProduct:
+    def __init__(self, brand, product, price, description, score):
+        self.brand = brand
+        self.product = product
+        self.price = price
+        self.description = description
+        self.score = score
+
+    def routine_to_dict(self):
+        return {
+           "Brand": self.brand,
+            "Product": self.product,
+            "Price": self.price,
+            "Description": self.description,
+            "Score": self.score
+        }
+
+
+
 
 def retrieve_routine():
     db_name = "beauty_haul_generator"

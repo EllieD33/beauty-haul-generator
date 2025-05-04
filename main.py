@@ -53,7 +53,7 @@ def main():
                 print("No problem, let's start again and find something better!💫\n")
 
     except KeyboardInterrupt:(
-    print("\n\n ❌ Exiting gracefully. Take care and stay fabulous! ✨"))
+    print("\n ❌ Exiting gracefully. Take care and stay fabulous! ✨"))
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,6 @@ from unittest.mock import patch, MagicMock
 
 from data.db_utils import insert_new_user_routine, DbConnectionError
 
-
 class MockProduct:
     def __init__(self, brand, product, price, desc, score):
         self.brand = brand
@@ -60,3 +59,4 @@ class TestInsertNewUserRoutine(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
