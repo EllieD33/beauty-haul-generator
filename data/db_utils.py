@@ -50,7 +50,9 @@ def insert_new_user_routine(user_routine):
         db_connection.commit()
 
         # select most recently added routine id, and get associated products, print to terminal
-        cursor.execute("""SELECT * FROM routine_products 
+        cursor.execute("""
+        SELECT brand, product, price, product_desc
+        FROM routine_products 
         WHERE routine_id = (
             SELECT MAX(id) FROM user_routines
             )
