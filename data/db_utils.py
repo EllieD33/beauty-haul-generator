@@ -48,6 +48,17 @@ def insert_new_user_routine(user_routine):
             ))
 
         db_connection.commit()
+
+        # select most recently added routine id, and get associated products, print to terminal
+        cursor.execute("""SELECT * FROM routine_products 
+        WHERE routine_id = (
+            SELECT MAX(id) FROM user_routines
+            )
+        """)
+        print("\n✨Here is your most recently saved routine: ")
+        for row in cursor.fetchall():
+            print(row)
+
     except Exception:
         raise DbConnectionError("\n⚠️ Error: Failed to write routine to DB")
     finally:
