@@ -28,6 +28,9 @@ tailors a glowing routine just for you.
 2. The app fetches and filters products using your answers.
 3. A custom haul is displayed just for you.
 4. You can choose to save it or modify your preferences.
+5. If you choose to save it:
+    - A copy is saved to our DB
+    - A copy is saved for you to access as a csv - look for the user_routines directory 🔍
 
 ---
 
@@ -88,10 +91,6 @@ pip install -r requirements.txt
 
     user_preferences.py – ⭐ Defines the User_Preferences class 
 
-📂 ui/
-
-    loading_spinner.py – ⏳ CLI loading spinner to indicate activity during API calls
-
 📂 tests/
 
     test_db_utils.py – ✅ Tests for database utilities
@@ -101,6 +100,14 @@ pip install -r requirements.txt
     test_products.py – ✅ Tests for product class methods
 
     test_user_interactions.py – ✅ Tests for validating user inputs
+
+📂 ui/
+
+    loading_spinner.py – ⏳ CLI loading spinner to indicate activity during API calls
+
+📂 user_routines/
+    
+    name.csv - 📄 A CSV file with the user's routine, saved under their name.
 
 ---
 
@@ -122,7 +129,6 @@ This would involve scraping or importing review data and performing text classif
 - **DB Caching:** Return past recommendations when identical inputs are detected.
 - **Refined Logic:** Allow product rejection and regeneration of specific items, not the whole haul.
 - **Enhanced UI/UX:** Potential GUI or web-based interface in future phases.
-- **Migration to a full database:** E.g., MySQL, PostgreSQL, or Firebase. Enabling more complex queries, user authentication, and integration with a future web frontend.
 
 ---
 
