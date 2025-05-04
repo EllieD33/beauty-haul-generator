@@ -43,7 +43,7 @@ class RoutineDisplay:
 class SaveRoutine:
     def __init__(self, routine, user_filename):
         self.routine = routine
-        self.filename = user_filename
+        self.user_filename = user_filename
         self.csv_directory = "user_routines"
 
     def _dir_exists(self):
@@ -58,7 +58,7 @@ class SaveRoutine:
         try:
             self._dir_exists()
 
-            file_name = f"{self.csv_directory}/{self.filename}.csv"
+            file_name = f"{self.csv_directory}/{self.user_filename}.csv"
             file_exists = os.path.exists(file_name)
 
             with open(file_name, "a", newline="") as csv_file:
