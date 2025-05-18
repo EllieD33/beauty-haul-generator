@@ -1,4 +1,3 @@
-# CFG-ProjectGroup5
 # Beauty Haul Generator ✨💄
 
 Welcome to the **Beauty Haul Generator**, an interactive Python application that crafts a personalised beauty product 
@@ -38,7 +37,7 @@ tailors a glowing routine just for you.
 
 1. **Clone the repository** via **SSH**, run the following:
 ```sh
-git clone git@github.com:sirenc0de/CFG-ProjectGroup5.git
+git clone git@github.com:EllieD33/beauty-haul-generator.git
 ```
 2. Install dependencies
 ```sh
@@ -53,7 +52,7 @@ pip install -r requirements.txt
 ---
 ## Project Structure ##
 
-📁 CFG-ProjectGroup5/
+📁 beauty-haul-generator/
 
     config.py – 🛠️ Configuarations necessary to run the application
     
@@ -62,8 +61,6 @@ pip install -r requirements.txt
     README.md – 📝 Project documentation
     
     requirements.txt – 📦 List of required packages
-
-    Group 5 Project Document.pdf - 📝 Additional project documentation
 
 📂 api/
 
@@ -133,19 +130,13 @@ This would involve scraping or importing review data and performing text classif
 ---
 
 ## To Do📌
-
-- Submit project via PR
-- Update project logs
-- Prepare and finalise project presentation
-- **Potentially**: 
-  - Integrate live product API (e.g., Makeup API)
   - Add review scraping or upload functionality 
   - Incorporate sentiment analysis for review-aware ranking
   - Build a basic web interface (Flask or Streamlit)
 
 ## 🔬Developers
 
-Ellen Daly,
+EllieD33,
 Ekum Jaswal,
 Tiffany Scott-Vaughan,
 Laura Wheaton,
